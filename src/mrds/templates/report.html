@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MRDS Report — {{ run.prompt_version }} / {{ run.model }}</title>
+<style>
+  /* ---- Base ---- */
+  *, *::before, *::after { box-sizing: border-box; }
+  body { font-family: system-ui, sans-serif; margin: 0; padding: 24px 32px;
+         background: #f5f5f5; color: #1a1a1a; }
+  h1, h2, h3 { margin: 0 0 8px; }
+  h2 { margin-top: 32px; border-bottom: 1px solid #ddd; padding-bottom: 4px; }
+  p { margin: 4px 0; }
+
+  /* ---- Badge ---- */
+  .badge { display: inline-block; padding: 4px 14px; border-radius: 4px;
+           font-size: 1.1rem; font-weight: 700; letter-spacing: .05em; }
+  .badge-PASS     { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+  .badge-WARN     { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+  .badge-CRITICAL { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+
+  /* ---- Cards ---- */
+  .card { background: #fff; border: 1px solid #ddd; border-radius: 6px;
+          padding: 16px 20px; margin-bottom: 16px; }
+
+  /* ---- Tables ---- */
+  table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  th { background: #f0f0f0; text-align: left; padding: 6px 10px;
+       border-bottom: 2px solid #ccc; }
+  td { padding: 6px 10px; border-bottom: 1px solid #eee; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+
+  /* ---- Delta colouring ---- */
+  .delta-neg { color: #c0392b; font-weight: 600; }
+  .delta-pos { color: #27ae60; font-weight: 600; }
+  .delta-zero { color: #888; }
+
+  /* ---- Violation colours ---- */
+  .viol-CRITICAL { color: #721c24; font-weight: 700; }
+  .viol-type { font-family: monospace; font-size: 0.85rem; background: #f5f5f5;
+               padding: 1px 5px; border-radius: 3px; }
+
+  /* ---- Side-by-side reasons ---- */
+  .reasons-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+                 margin: 4px 0 12px; }
+  .reason-box { background: #fafafa; border: 1px solid #e0e0e0; border-radius: 4px;
+                padding: 8px 10px; font-size: 0.82rem; line-height: 1.45; }
+  .reason-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+                  letter-spacing: .05em; color: #666; margin-bottom: 4px; }
+
+  /* ---- Details toggle ---- */
+  details > summary { cursor: pointer; color: #1a6eb5; font-size: 0.88rem; }
+  details[open] > summary { margin-bottom: 6px; }
+
+  /* ---- Meta grid ---- */
+  .meta-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px,1fr));
+               gap: 12px; }
+  .meta-item { background: #fff; border: 1px solid #ddd; border-radius: 6px;
+               padding: 10px 14px; }
+  .meta-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+                letter-spacing: .05em; color: #888; }
+  .meta-value { font-size: 1.05rem; font-weight: 600; margin-top: 2px; }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ────────────────────────────────────────────── -->
+<h1>Model Regression Detection Report</h1>
+<p style="color:#666; margin-bottom:20px;">
+  {{ run.created_at }} &nbsp;·&nbsp; prompt: <strong>{{ run.prompt_version }}</strong>
+  &nbsp;·&nbsp; model: <strong>{{ run.model }}</strong>
+</p>
+
+<span class="badge badge-{{ diff.severity }}">{{ diff.severity }}</span>
+&nbsp;
+<span style="font-size:1rem;">{{ diff.headline }}</span>
+
+<div style="margin-top:12px;">
+{% for line in diff.details %}
+  <p>{{ line }}</p>
+{% endfor %}
+</div>
+
+
+<!-- ── META GRID ─────────────────────────────────────────── -->
+<h2>Run Metadata</h2>
+<div class="meta-grid">
+  <div class="meta-item"><div class="meta-label">Valid cases</div>
+    <div class="meta-value">{{ run.totals.cases_valid }} / {{ run.totals.cases_total }}</div></div>
+  <div class="meta-item"><div class="meta-label">Latency p50</div>
+    <div class="meta-value">{{ run.totals.latency_p50_ms | round(0) | int }} ms</div></div>
+  <div class="meta-item"><div class="meta-label">Latency p95</div>
+    <div class="meta-value">{{ run.totals.latency_p95_ms | round(0) | int }} ms</div></div>
+  <div class="meta-item"><div class="meta-label">Input tokens</div>
+    <div class="meta-value">{{ run.totals.input_tokens }}</div></div>
+  <div class="meta-item"><div class="meta-label">Output tokens</div>
+    <div class="meta-value">{{ run.totals.output_tokens }}</div></div>
+  <div class="meta-item"><div class="meta-label">Temperature</div>
+    <div class="meta-value">{{ run.temperature }}</div></div>
+</div>
+
+<!-- ── CONTRACT VIOLATIONS ───────────────────────────────── -->
+<h2>Contract Violations
+  <span style="font-weight:400; font-size:0.9rem; color:#888;">
+    (hard gate — any violation is CRITICAL)
+  </span>
+</h2>
+
+{% if diff.total_violations == 0 %}
+<div class="card">
+  <span style="color:#155724;">✓ No contract violations. All 10 cases returned valid JSON.</span>
+</div>
+{% else %}
+<div class="card">
+  <p class="viol-CRITICAL">{{ diff.total_violations }} total violation(s) found.</p>
+  <p style="color:#555; font-size:0.85rem;">
+    Cases with violations are excluded from numeric scoring.
+    Numeric metrics below are computed over
+    <strong>{{ diff.cases_compared }}</strong> of
+    <strong>{{ run.totals.cases_total }}</strong> cases.
+  </p>
+  <table style="margin-top:12px;">
+    <tr><th>Type</th><th>Count</th><th>Affected cases</th></tr>
+    {% for v in diff.violation_summary %}
+    <tr>
+      <td><span class="viol-type">{{ v.type }}</span></td>
+      <td class="num">{{ v.count }}</td>
+      <td style="font-size:0.82rem;">{{ v.cases | join(", ") }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  <details style="margin-top:12px;">
+    <summary>Show raw offending payloads</summary>
+    {% for case in run.cases %}
+    {% if case.violations %}
+    <div style="margin-top:10px;">
+      <strong>{{ case.case_id }}</strong>
+      {% for v in case.violations %}
+      <p style="margin:2px 0; font-size:0.82rem;">
+        <span class="viol-type">{{ v.type }}</span>
+        at <code>{{ v.field_path }}</code> — {{ v.detail }}
+      </p>
+      {% endfor %}
+      {% if case.raw_text %}
+      <pre style="background:#f5f5f5; border:1px solid #ddd; padding:8px;
+                  border-radius:4px; font-size:0.78rem; overflow-x:auto;
+                  white-space:pre-wrap; margin-top:6px;">{{ case.raw_text | truncate(800) }}</pre>
+      {% endif %}
+    </div>
+    {% endif %}
+    {% endfor %}
+  </details>
+</div>
+{% endif %}
+
+<!-- ── SCORE COMPARISON ───────────────────────────────────── -->
+<h2>Score Comparison
+  <span style="font-weight:400; font-size:0.9rem; color:#888;">
+    (computed over {{ diff.cases_compared }} valid paired cases)
+  </span>
+</h2>
+
+<div class="card">
+<table>
+  <tr>
+    <th>Dimension</th>
+    <th class="num">Baseline mean</th>
+    <th class="num">Current mean</th>
+    <th class="num">Delta</th>
+    <th class="num">Mean abs delta</th>
+    <th class="num">Exact match</th>
+    <th class="num">Moved ≥2</th>
+  </tr>
+  {% for fname, fd in diff.numeric.per_field.items() %}
+  <tr>
+    <td>{{ fname }}</td>
+    <td class="num">{{ fd.baseline_mean }}</td>
+    <td class="num">{{ fd.current_mean }}</td>
+    <td class="num
+      {% if fd.delta < 0 %} delta-neg
+      {% elif fd.delta > 0 %} delta-pos
+      {% else %} delta-zero{% endif %}">
+      {% if fd.delta > 0 %}+{% endif %}{{ fd.delta }}
+    </td>
+    <td class="num">{{ fd.mean_abs_delta }}</td>
+    <td class="num">{{ fd.exact_matches }} / {{ diff.cases_compared }}</td>
+    <td class="num">{{ fd.moved }}</td>
+  </tr>
+  {% endfor %}
+</table>
+</div>
+
+{% if diff.numeric.pitch_changes %}
+<div class="card">
+  <strong>pitch_rating changes ({{ diff.numeric.pitch_changes | length }}):</strong>
+  <table style="margin-top:8px;">
+    <tr><th>Case</th><th>Baseline</th><th>Current</th></tr>
+    {% for case_id, frm, to in diff.numeric.pitch_changes %}
+    <tr>
+      <td>{{ case_id }}</td>
+      <td>{{ frm }}</td>
+      <td class="{% if to in ['poor','bad'] %}delta-neg{% elif to in ['great','good'] %}delta-pos{% endif %}">
+        {{ to }}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endif %}
+
+<!-- ── PER-CASE DETAIL ────────────────────────────────────── -->
+<h2>Per-case Detail</h2>
+
+{% for comp in diff.numeric.cases | sort(attribute="max_abs_delta", reverse=True) %}
+{% set case = run.cases | selectattr("case_id", "equalto", comp.case_id) | first %}
+{% set base_case = baseline_cases[comp.case_id] %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h3>{{ comp.case_id }}
+      <span style="font-weight:400; font-size:0.85rem; color:#666;">
+        ({{ case.domain }}, {{ case.n_turns }} turns)
+      </span>
+    </h3>
+    <span class="badge
+      {% if comp.direction == 'regressed' %}badge-CRITICAL
+      {% elif comp.direction == 'improved' %}badge-PASS
+      {% else %}badge-WARN{% endif %}"
+      style="font-size:0.8rem;">
+      {{ comp.direction }}
+    </span>
+  </div>
+
+  <!-- Score table -->
+  <table style="margin-top:8px; width:auto;">
+    <tr>
+      <th>Dimension</th>
+      <th class="num">Baseline</th>
+      <th class="num">Current</th>
+      <th class="num">Δ</th>
+    </tr>
+    {% for dim in ["persuasiveness","politeness","objection_handling","clarity","discovery_quality","overall_score"] %}
+    {% set d = comp.deltas[dim] %}
+    <tr>
+      <td>{{ dim }}</td>
+      <td class="num">{{ comp.baseline_scores[dim] }}</td>
+      <td class="num">{{ comp.current_scores[dim] }}</td>
+      <td class="num {% if d < 0 %}delta-neg{% elif d > 0 %}delta-pos{% else %}delta-zero{% endif %}">
+        {% if d > 0 %}+{% endif %}{{ d }}
+      </td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <td>pitch_rating</td>
+      <td>{{ comp.baseline_pitch }}</td>
+      <td class="{% if comp.pitch_changed %}delta-neg{% endif %}">{{ comp.current_pitch }}</td>
+      <td class="{% if comp.pitch_changed %}delta-neg{% endif %}">
+        {% if comp.pitch_changed %}changed{% else %}—{% endif %}
+      </td>
+    </tr>
+  </table>
+
+  <!-- Reason panels -->
+  {% if base_case and case.scorecard %}
+  <details style="margin-top:10px;">
+    <summary>Show reasoning (side by side)</summary>
+    {% for dim in ["persuasiveness","politeness","objection_handling","clarity","discovery_quality"] %}
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">{{ dim }}</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        {{ base_case.scorecard[dim].reason if base_case.scorecard else "—" }}
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        {{ case.scorecard[dim].reason }}
+      </div>
+    </div>
+    {% endfor %}
+  </details>
+  {% endif %}
+
+  <!-- Advisory judge -->
+  {% if case.judge_alignment %}
+  <p style="margin-top:8px; font-size:0.82rem; color:#555;">
+    <strong>Reasoning alignment (advisory):</strong>
+    {{ case.judge_alignment }}/5 — {{ case.judge_note or "" }}
+  </p>
+  {% endif %}
+</div>
+{% endfor %}
+
+<!-- Cases that had contract violations (excluded from above) -->
+{% for case in run.cases %}
+{% if case.violations %}
+<div class="card" style="border-left: 4px solid #721c24;">
+  <h3>{{ case.case_id }}
+    <span style="font-weight:400; font-size:0.85rem; color:#666;">
+      ({{ case.domain }}, {{ case.n_turns }} turns)
+    </span>
+    <span class="badge badge-CRITICAL" style="font-size:0.8rem; margin-left:8px;">CONTRACT VIOLATION</span>
+  </h3>
+  {% for v in case.violations %}
+  <p style="font-size:0.85rem;">
+    <span class="viol-type">{{ v.type }}</span>
+    at <code>{{ v.field_path }}</code> — {{ v.detail }}
+  </p>
+  {% endfor %}
+</div>
+{% endif %}
+{% endfor %}
+
+</body>
+</html>

@@ -1,0 +1,135 @@
+name: Eval — Regression Detection
+
+# Run on every PR that touches the prompts/ folder.
+# Compares the new prompt against the current baseline (previous version).
+# CRITICAL = merge blocked.
+
+on:
+  pull_request:
+    paths:
+      - "prompts/**"
+
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: write      # needed to commit the new baseline on merge
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip install -e .
+          pip install "pydantic==2.13.4" "google-genai==2.9.0"
+
+      - name: Find the new prompt file
+        id: find_prompt
+        run: |
+          # Find which prompt file was changed in this PR.
+          CHANGED=$(git diff --name-only origin/main -- prompts/ | head -1)
+          echo "prompt_file=$CHANGED" >> $GITHUB_OUTPUT
+          echo "Changed prompt: $CHANGED"
+
+      - name: Run eval against baseline
+        id: eval
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        continue-on-error: true
+        run: |
+          python -m mrds run "${{ steps.find_prompt.outputs.prompt_file }}" 2>&1 | tee eval_output.txt
+          echo "exit_code=$?" >> $GITHUB_OUTPUT
+
+      - name: Upload HTML report
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-report
+          path: reports/*.html
+          if-no-files-found: warn
+
+      - name: Post summary on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const output = fs.readFileSync('eval_output.txt', 'utf8');
+            const lines = output.trim().split('\n');
+            const summary = lines.slice(-8).join('\n');
+
+            const exitCode = '${{ steps.eval.outputs.exit_code }}';
+            const status = exitCode === '1' ? '🔴 CRITICAL' : '🟢 PASS / WARN';
+
+            const body = [
+              `## Eval Result: ${status}`,
+              '',
+              '```',
+              summary,
+              '```',
+              '',
+              exitCode === '1'
+                ? '> **This PR is blocked.** Fix the regression before merging.'
+                : '> Eval passed. Download the HTML report artifact for full details.',
+            ].join('\n');
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body,
+            });
+
+      - name: Block on CRITICAL
+        if: steps.eval.outputs.exit_code == '1'
+        run: |
+          echo "Eval returned CRITICAL. Merge blocked."
+          exit 1
+
+  # After a PR merges, promote the new run to become the baseline.
+  promote:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip install -e .
+          pip install "pydantic==2.13.4" "google-genai==2.9.0"
+
+      - name: Find the merged prompt
+        id: find_prompt
+        run: |
+          CHANGED=$(git diff --name-only HEAD~1 -- prompts/ | head -1)
+          echo "prompt_file=$CHANGED" >> $GITHUB_OUTPUT
+
+      - name: Run and promote to new baseline
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python -m mrds run "${{ steps.find_prompt.outputs.prompt_file }}" --promote
+
+      - name: Commit new baseline
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/baseline.json
+          git commit -m "Update baseline after prompt merge" || echo "No changes"
+          git push

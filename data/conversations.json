@@ -1,0 +1,626 @@
+[
+  {
+    "case_id": "conv_026",
+    "domain": "health_products",
+    "n_turns": 8,
+    "source_row": 26,
+    "turns": [
+      {
+        "role": "customer",
+        "text": "Hi, Im interested in your health products. Can you tell me more about them?"
+      },
+      {
+        "role": "salesman",
+        "text": "Of course! Our products are designed to promote overall health and well-being. They are made with natural ingredients and have been proven to be effective. How can I assist you further?"
+      },
+      {
+        "role": "customer",
+        "text": "Ive been experiencing some health issues lately. Do you have anything that can help?"
+      },
+      {
+        "role": "salesman",
+        "text": "Im sorry to hear that. We have a range of products that target specific health concerns. If you tell me more about your symptoms, I can recommend something suitable for you."
+      },
+      {
+        "role": "customer",
+        "text": "Ive tried different health products in the past, but none of them worked for me. Why should I trust your products?"
+      },
+      {
+        "role": "salesman",
+        "text": "I understand your skepticism. Our products are backed by extensive research and have received positive feedback from many satisfied customers. We also offer a satisfaction guarantee, so if youre not happy with the results, you can get a refund. We genuinely want to help you improve your health."
+      },
+      {
+        "role": "customer",
+        "text": "Im not sure if I can afford your health products. Are they expensive?"
+      },
+      {
+        "role": "salesman",
+        "text": "Our prices are competitive compared to similar products on the market. We also offer flexible payment options and occasional discounts to make our products more accessible. We prioritize your health and strive to provide value for your investment."
+      }
+    ]
+  },
+  {
+    "case_id": "conv_024",
+    "domain": "tech_product",
+    "n_turns": 10,
+    "source_row": 24,
+    "turns": [
+      {
+        "role": "customer",
+        "text": "Hi, Im interested in your tech product. Can you tell me more about it?"
+      },
+      {
+        "role": "salesman",
+        "text": "Certainly! Thank you for your interest. Our tech product is designed to simplify daily tasks and improve productivity. It has a user-friendly interface and offers various features that can greatly benefit you. How can I assist you further?"
+      },
+      {
+        "role": "customer",
+        "text": "Im concerned about the cost. Is it worth the investment?"
+      },
+      {
+        "role": "salesman",
+        "text": "I understand your concern. Our tech product may seem like an investment at first, but it provides excellent value for its capabilities. It streamlines processes, saving time and resources in the long run. Additionally, we offer a flexible payment plan to make it more affordable for you. Let me provide you with more details."
+      },
+      {
+        "role": "customer",
+        "text": "Ive had bad experiences with similar products in the past. How can I be sure this will be different?"
+      },
+      {
+        "role": "salesman",
+        "text": "I completely understand your previous experiences may have left you hesitant. However, we pride ourselves on exceptional customer satisfaction. Our tech product has been carefully developed, taking into account customer feedback and ensuring a seamless user experience. We also offer a satisfaction guarantee, allowing you to try it risk-free. Let me share some success stories from our satisfied customers."
+      },
+      {
+        "role": "customer",
+        "text": "Im not sure if this tech product is the right fit for my specific needs."
+      },
+      {
+        "role": "salesman",
+        "text": "I appreciate your concern. Understanding your needs is crucial to finding the right solution. Lets discuss your specific requirements in detail, and Ill provide you with personalized insights on how our tech product can address them. We can also explore any customization options if needed."
+      },
+      {
+        "role": "customer",
+        "text": "Ive been considering other options as well. What makes your tech product stand out?"
+      },
+      {
+        "role": "salesman",
+        "text": "Thats a great question. We know there are various options out there, but what sets us apart is our commitment to customer satisfaction. Our tech product not only offers advanced features but also focuses on providing a seamless user experience and excellent support. We have a dedicated team ready to assist you throughout your journey with our product. Let me share some testimonials from our satisfied customers who chose us over competitors."
+      }
+    ]
+  },
+  {
+    "case_id": "conv_025",
+    "domain": "tech_product",
+    "n_turns": 12,
+    "source_row": 25,
+    "turns": [
+      {
+        "role": "customer",
+        "text": "Hi, Im interested in your tech product. Can you tell me more about it?"
+      },
+      {
+        "role": "salesman",
+        "text": "Of course! Id be happy to provide more information. May I ask what specifically caught your interest?"
+      },
+      {
+        "role": "customer",
+        "text": "Im not sure if your product is the right fit for my needs. Ive had bad experiences before."
+      },
+      {
+        "role": "salesman",
+        "text": "I understand your concern. Building rapport is important to me, so lets address your previous experiences and find a solution that meets your needs."
+      },
+      {
+        "role": "customer",
+        "text": "Im considering other options as well. Why should I choose your product?"
+      },
+      {
+        "role": "salesman",
+        "text": "Great question! Building rapport with our customers is a priority, and we pride ourselves on understanding their unique requirements. Let me explain how our product stands out from the competition and why it would be a great fit for you."
+      },
+      {
+        "role": "customer",
+        "text": "Ive had some challenges with similar products in the past. How will your product address those concerns?"
+      },
+      {
+        "role": "salesman",
+        "text": "Thank you for sharing your concerns. Building rapport is important to me, and I want to ensure our product meets your expectations. Lets discuss your past challenges in detail, and Ill explain how our product addresses them to provide a better experience."
+      },
+      {
+        "role": "customer",
+        "text": "Im not sure if I can trust your company. How do I know you genuinely care about my success?"
+      },
+      {
+        "role": "salesman",
+        "text": "I completely understand the importance of trust. Building rapport with our customers is a core value for us. Lets delve into your concerns, and Ill demonstrate how we prioritize your success and go above and beyond to support you."
+      },
+      {
+        "role": "customer",
+        "text": "Ive had a negative experience with a salesperson before. How can I be sure youre different?"
+      },
+      {
+        "role": "salesman",
+        "text": "Im sorry to hear about your past experience. Building rapport is crucial to me, and I want to show you how we approach sales differently. Lets address your concerns, and Ill make sure you have a positive and personalized experience with us."
+      }
+    ]
+  },
+  {
+    "case_id": "conv_077",
+    "domain": "health_products",
+    "n_turns": 12,
+    "source_row": 77,
+    "turns": [
+      {
+        "role": "customer",
+        "text": "Hi, Im interested in your health product. Can you tell me more about it?"
+      },
+      {
+        "role": "salesman",
+        "text": "Of course! Our health product is designed to improve overall wellness and boost energy levels. Its important to note that building rapport with our customers is a crucial step in the sales process. By establishing a connection, we can better understand your specific needs and tailor our approach to address them."
+      },
+      {
+        "role": "customer",
+        "text": "Ive tried similar products in the past, but they didnt work for me. What makes yours different?"
+      },
+      {
+        "role": "salesman",
+        "text": "Thats a valid concern. Building rapport allows us to have an open and honest conversation. By actively listening to your previous experiences and demonstrating empathy, we can understand your pain points and challenges better. This way, we can recommend the most suitable solution based on your unique needs."
+      },
+      {
+        "role": "customer",
+        "text": "Im hesitant to try new products. How can you assure me that yours is reliable?"
+      },
+      {
+        "role": "salesman",
+        "text": "Building rapport is essential for establishing trust. By developing a positive and genuine connection, we aim to gain your confidence in our product and company. We genuinely care about your success and want to ensure that the product we recommend is reliable and meets your expectations."
+      },
+      {
+        "role": "customer",
+        "text": "Ive heard mixed reviews about your company. Why should I choose you over your competitors?"
+      },
+      {
+        "role": "salesman",
+        "text": "Building rapport allows us to differentiate ourselves from competitors. By establishing a personal connection, we aim to create a memorable experience. Our focus on understanding your needs and providing exceptional service sets us apart. We want to make you feel understood and valued, making your decision to choose us easier."
+      },
+      {
+        "role": "customer",
+        "text": "Im not sure if Ill need more products in the future. Is this a one-time purchase?"
+      },
+      {
+        "role": "salesman",
+        "text": "Building rapport is an ongoing process. We understand that your needs may change over time, and we are committed to maintaining a long-term relationship with you. By staying in touch, providing relevant information, and showing continued interest, we can provide support whenever you may require additional products."
+      },
+      {
+        "role": "customer",
+        "text": "Ive had a negative experience with a previous salesperson. How can I trust you?"
+      },
+      {
+        "role": "salesman",
+        "text": "Building rapport is all about creating a harmonious relationship based on trust and understanding. We aim to differentiate ourselves by showing genuine care and interest in your well-being. We want to rebuild your trust by providing a positive experience and addressing any concerns you may have."
+      }
+    ]
+  },
+  {
+    "case_id": "conv_043",
+    "domain": "health_supplements",
+    "n_turns": 14,
+    "source_row": 43,
+    "turns": [
+      {
+        "role": "customer",
+        "text": "Hi, Im interested in your health supplements. Can you tell me more about them?"
+      },
+      {
+        "role": "salesman",
+        "text": "Of course! Our health supplements are designed to support overall well-being and address specific health concerns. What specific needs or goals do you have?"
+      },
+      {
+        "role": "customer",
+        "text": "Ive been experiencing low energy levels lately. Can your supplements help with that?"
+      },
+      {
+        "role": "salesman",
+        "text": "Absolutely! We have a range of supplements that are formulated to boost energy levels. They contain natural ingredients that provide vital nutrients and support your bodys energy production. Would you like me to recommend a specific supplement?"
+      },
+      {
+        "role": "customer",
+        "text": "Ive tried different supplements before, but none of them seem to work. What makes yours different?"
+      },
+      {
+        "role": "salesman",
+        "text": "I understand your concern. Our supplements are carefully formulated using high-quality ingredients and undergo rigorous testing to ensure their effectiveness. We also have many satisfied customers who have experienced positive results. Would you like to hear some testimonials?"
+      },
+      {
+        "role": "customer",
+        "text": "How do I know if your supplements are safe to take?"
+      },
+      {
+        "role": "salesman",
+        "text": "Thats a valid question. Our supplements are produced in FDA-approved facilities and adhere to strict quality standards. They are also third-party tested for safety and purity. We prioritize the well-being of our customers, and we take every precaution to ensure our products are safe to use."
+      },
+      {
+        "role": "customer",
+        "text": "Im hesitant to try new supplements. Can you provide any guarantees or warranties?"
+      },
+      {
+        "role": "salesman",
+        "text": "I completely understand your concern. We offer a satisfaction guarantee on all our products. If youre not completely satisfied with your purchase, you can return it within 30 days for a full refund. We stand behind the quality and effectiveness of our supplements."
+      },
+      {
+        "role": "customer",
+        "text": "Ive been recommended some other brands of supplements. Why should I choose yours?"
+      },
+      {
+        "role": "salesman",
+        "text": "Great question! What sets us apart is our commitment to building relationships with our customers. We take the time to understand your unique needs and provide personalized recommendations. Our supplements are also backed by scientific research and have a track record of positive results. We strive to exceed your expectations and provide exceptional customer service."
+      },
+      {
+        "role": "customer",
+        "text": "Im looking for a long-term solution for my health. How can your supplements help with that?"
+      },
+      {
+        "role": "salesman",
+        "text": "Our supplements are designed to support long-term health and well-being. They are not just a quick fix, but part of a holistic approach to wellness. By incorporating our supplements into your daily routine, you can maintain and improve your health over time. We also offer ongoing support and resources to help you achieve your health goals."
+      }
+    ]
+  },
+  {
+    "case_id": "conv_027",
+    "domain": "health_insurance",
+    "n_turns": 16,
+    "source_row": 27,
+    "turns": [
+      {
+        "role": "customer",
+        "text": "Hi, Im interested in your health insurance plans. Can you provide me with some information?"
+      },
+      {
+        "role": "salesman",
+        "text": "Of course! Id be happy to help. Lets start by getting to know each other a little. What are your specific needs and concerns when it comes to health insurance?"
+      },
+      {
+        "role": "customer",
+        "text": "Ive been dealing with a chronic condition, and I need a health insurance plan that covers the necessary treatments and medications. I also want to make sure the plan is affordable."
+      },
+      {
+        "role": "salesman",
+        "text": "Thank you for sharing that with me. I understand how important it is for you to have comprehensive coverage and affordable options. Rest assured, Im here to find the best plan that meets your needs and fits your budget."
+      },
+      {
+        "role": "customer",
+        "text": "Ive had bad experiences with insurance companies in the past. Im skeptical about the whole process."
+      },
+      {
+        "role": "salesman",
+        "text": "I completely understand your concerns. Building trust is a top priority for me, and I aim to provide you with a positive experience. Lets address any doubts or questions you may have, and Ill do my best to earn your trust throughout this process."
+      },
+      {
+        "role": "customer",
+        "text": "Im not sure if I really need health insurance. Can you convince me why its important?"
+      },
+      {
+        "role": "salesman",
+        "text": "Absolutely! Health insurance is crucial because it provides financial protection in case of unexpected medical expenses. It ensures that you have access to quality healthcare without having to worry about exorbitant costs. I can explain in more detail and provide examples if youd like."
+      },
+      {
+        "role": "customer",
+        "text": "Ive heard a lot of negative things about health insurance companies. How can I be sure I wont face any issues?"
+      },
+      {
+        "role": "salesman",
+        "text": "I understand your concerns, as the reputation of insurance companies can vary. However, I assure you that we prioritize customer satisfaction and have a track record of providing excellent service. Ill be happy to share testimonials and reviews from our satisfied customers to put your mind at ease."
+      },
+      {
+        "role": "customer",
+        "text": "Im not comfortable sharing personal health information. How can I trust you with that?"
+      },
+      {
+        "role": "salesman",
+        "text": "I completely respect your privacy. Rest assured that any personal health information you provide will be treated with the utmost confidentiality and will only be used to find the most suitable health insurance options for you. Your trust is important to me."
+      },
+      {
+        "role": "customer",
+        "text": "Ive been considering other health insurance providers. What sets you apart from the competition?"
+      },
+      {
+        "role": "salesman",
+        "text": "Great question! What sets us apart is our commitment to building strong relationships with our customers. We not only offer comprehensive health insurance plans but also provide personalized assistance and support throughout your journey. Our goal is to make you feel understood, valued, and confident in your decision."
+      },
+      {
+        "role": "customer",
+        "text": "Ive had a bad experience with a previous health insurance provider. How can you ensure that wont happen again?"
+      },
+      {
+        "role": "salesman",
+        "text": "Im sorry to hear about your past experience. I assure you that we prioritize customer satisfaction and have measures in place to address any issues promptly. Our dedicated customer support team is available to assist you at any time, ensuring a smooth and hassle-free experience. Your satisfaction is our top priority."
+      }
+    ]
+  },
+  {
+    "case_id": "conv_034",
+    "domain": "tech_product",
+    "n_turns": 16,
+    "source_row": 34,
+    "turns": [
+      {
+        "role": "customer",
+        "text": "Hi, Im interested in purchasing your tech product. Can you tell me more about it?"
+      },
+      {
+        "role": "salesman",
+        "text": "Of course! Id be happy to provide you with all the information you need. But first, may I ask what specific features youre looking for in a tech product?"
+      },
+      {
+        "role": "customer",
+        "text": "Im concerned about the durability of your product. How long does it usually last?"
+      },
+      {
+        "role": "salesman",
+        "text": "Thats a great question. Our tech product is designed with high-quality materials and undergoes rigorous testing for durability. It typically lasts for several years, but we also offer a warranty to ensure customer satisfaction. Is there anything else youd like to know about its durability?"
+      },
+      {
+        "role": "customer",
+        "text": "Ive been researching different tech products, and Im having trouble deciding. Can you help me make the right choice?"
+      },
+      {
+        "role": "salesman",
+        "text": "Absolutely! I understand that choosing the right tech product can be overwhelming. Could you share your specific requirements and preferences? This will allow me to provide you with personalized recommendations and help you make an informed decision."
+      },
+      {
+        "role": "customer",
+        "text": "Ive heard mixed reviews about your product. How can I be sure its the right choice for me?"
+      },
+      {
+        "role": "salesman",
+        "text": "I appreciate your concern. While every customers experience may vary, I can assure you that we strive for customer satisfaction. Our product goes through extensive quality control measures, and we also offer a return policy if youre not completely satisfied. Additionally, Id be happy to connect you with some of our satisfied customers who can share their positive experiences."
+      },
+      {
+        "role": "customer",
+        "text": "Im looking for a tech product that suits my budget. Can you offer any discounts or promotions?"
+      },
+      {
+        "role": "salesman",
+        "text": "Certainly! We understand the importance of budget considerations. Currently, we have a special promotion running that offers a discount on our tech product. Let me provide you with the details and see how we can accommodate your budget."
+      },
+      {
+        "role": "customer",
+        "text": "Ive had a negative experience with a similar tech product in the past. How can I be sure I wont face the same issues with yours?"
+      },
+      {
+        "role": "salesman",
+        "text": "Im sorry to hear about your previous experience. We value customer feedback and continuously strive to improve our products. Our tech product has undergone enhancements and addresses common issues faced by customers in the past. Additionally, we have a dedicated customer support team that is readily available to assist you if any concerns arise."
+      },
+      {
+        "role": "customer",
+        "text": "Im not sure if this tech product is suitable for my specific needs. Can you provide more information about its capabilities?"
+      },
+      {
+        "role": "salesman",
+        "text": "Certainly! Understanding your needs is crucial in determining if our tech product is the right fit for you. Could you please share the specific requirements or tasks you need the product to fulfill? This will help me provide you with detailed information on its capabilities and whether it aligns with your needs."
+      },
+      {
+        "role": "customer",
+        "text": "Im hesitant to make a purchase without trying the product first. Do you offer any trial periods or demos?"
+      },
+      {
+        "role": "salesman",
+        "text": "We understand the importance of trying out a tech product before making a commitment. We offer a trial period where you can test the product and assess its suitability for your needs. Additionally, we also provide live demos where you can experience the products features firsthand. Lets discuss the details and find the best way for you to try out the product."
+      }
+    ]
+  },
+  {
+    "case_id": "conv_039",
+    "domain": "tech_b2b_software",
+    "n_turns": 16,
+    "source_row": 39,
+    "turns": [
+      {
+        "role": "customer",
+        "text": "Hi, Im interested in your tech product. Can you tell me more about it?"
+      },
+      {
+        "role": "salesman",
+        "text": "Of course! Id be happy to. Before we dive into the details, may I ask what specifically caught your attention about our product?"
+      },
+      {
+        "role": "customer",
+        "text": "Im considering purchasing your software, but Im not sure if its the right fit for my business. Can you help me with that?"
+      },
+      {
+        "role": "salesman",
+        "text": "Absolutely! Understanding your unique business needs is crucial. Could you tell me a bit more about your business and the specific challenges youre facing? This will help me determine if our software is the right solution for you."
+      },
+      {
+        "role": "customer",
+        "text": "Ive been researching different tech providers, and Im looking for someone who really understands my industry. Can you demonstrate your expertise?"
+      },
+      {
+        "role": "salesman",
+        "text": "Certainly! I have extensive experience working with clients in your industry. I understand the challenges and trends, and I can tailor our tech solutions to meet your specific needs. Let me give you some examples of how weve successfully helped businesses like yours in the past."
+      },
+      {
+        "role": "customer",
+        "text": "Im concerned about the price of your product. Can you justify the cost?"
+      },
+      {
+        "role": "salesman",
+        "text": "I completely understand your concern. Our product may seem a bit pricier, but let me explain the value it brings. It offers advanced features and capabilities that can significantly improve your efficiency and productivity. In the long run, it can save you time, resources, and ultimately, money. Would you like me to provide more details?"
+      },
+      {
+        "role": "customer",
+        "text": "Ive had a bad experience with a similar tech product in the past. How can you assure me that your product is different?"
+      },
+      {
+        "role": "salesman",
+        "text": "Im sorry to hear about your previous experience. I want to assure you that our product is unique and has been designed with specific customer pain points in mind. Weve received positive feedback from many customers who had similar concerns initially. Would you be open to a demo or trial period to experience our product firsthand and see the difference?"
+      },
+      {
+        "role": "customer",
+        "text": "Im not sure if I can trust your company. How can I be confident in doing business with you?"
+      },
+      {
+        "role": "salesman",
+        "text": "Building trust is essential to us, and we take it very seriously. We have a proven track record of delivering high-quality products and excellent customer service. We also have numerous satisfied customers who can vouch for our reliability and integrity. Additionally, we offer a money-back guarantee for our product, so you can try it risk-free. Is there anything specific youd like to know to help build your confidence?"
+      },
+      {
+        "role": "customer",
+        "text": "Ive heard good things about your competitor. Why should I choose your tech product instead?"
+      },
+      {
+        "role": "salesman",
+        "text": "Thats a great question. While our competitor may have their strengths, what sets us apart is our dedication to understanding and addressing our customers unique needs. We go above and beyond to provide personalized support, tailored solutions, and a seamless user experience. We have a solid reputation for delivering exceptional value and exceeding customer expectations. Would you like me to provide more details on how we stand out from the competition?"
+      },
+      {
+        "role": "customer",
+        "text": "I want to explore other options before making a decision. Can you convince me to choose your tech product now?"
+      },
+      {
+        "role": "salesman",
+        "text": "I completely understand your desire to explore different options. Our goal is not to rush your decision, but rather to help you make an informed choice. Id be happy to provide you with more information, answer any questions you have, and even offer a trial period so you can experience the benefits of our tech product firsthand. What specific aspects would you like to learn more about?"
+      }
+    ]
+  },
+  {
+    "case_id": "conv_053",
+    "domain": "financial_planning",
+    "n_turns": 16,
+    "source_row": 53,
+    "turns": [
+      {
+        "role": "customer",
+        "text": "Hi, Im interested in your financial planning services. Can you tell me more about them?"
+      },
+      {
+        "role": "salesman",
+        "text": "Of course, Id be happy to! Financial planning is all about helping individuals and businesses manage their money and achieve their financial goals. By understanding your unique needs and objectives, we can create a personalized plan that maximizes your financial potential. How can I assist you specifically?"
+      },
+      {
+        "role": "customer",
+        "text": "Im hesitant to invest because Ive had bad experiences in the past. How can you assure me that it wont happen again?"
+      },
+      {
+        "role": "salesman",
+        "text": "I completely understand your concern. Building trust is a top priority for us. We have a proven track record of delivering successful outcomes for our clients, and we prioritize transparency in our approach. We can provide you with testimonials from satisfied customers and explain our risk management strategies to give you peace of mind. We want to build a strong rapport with you based on trust and understanding."
+      },
+      {
+        "role": "customer",
+        "text": "Im not sure if I can afford your services. Can you work with my budget?"
+      },
+      {
+        "role": "salesman",
+        "text": "Absolutely, we believe in tailoring our services to fit your financial situation. We offer flexible options and can work within your budget to ensure you receive the guidance and support you need. Our goal is to help you achieve financial success without straining your finances. Lets discuss your budget and explore how we can assist you."
+      },
+      {
+        "role": "customer",
+        "text": "Ive heard about other financial planners who didnt take my goals into consideration. How do you ensure you understand my needs?"
+      },
+      {
+        "role": "salesman",
+        "text": "We understand the importance of understanding your needs and goals. Our first step is to have a thorough discussion to gain insight into your specific objectives. We ask detailed questions to ensure we have a comprehensive understanding of what you want to achieve. This way, we can develop a personalized financial plan that aligns with your goals and aspirations. Our focus is on your success."
+      },
+      {
+        "role": "customer",
+        "text": "Im interested, but I need more time to think it over. Can you keep me updated with relevant information?"
+      },
+      {
+        "role": "salesman",
+        "text": "Absolutely! We respect your decision-making process. We can provide you with regular updates, newsletters, and valuable information related to financial planning. By staying in touch, we can ensure you have all the information you need to make an informed decision. We are here to support you throughout your journey, even if you need more time to think it through."
+      },
+      {
+        "role": "customer",
+        "text": "Ive had a bad experience with a previous financial advisor. How can I trust you wont let me down?"
+      },
+      {
+        "role": "salesman",
+        "text": "Building trust is of utmost importance to us. We prioritize transparency and open communication. We have a strong track record of client satisfaction, and we can provide you with references from our happy clients. Our goal is to establish a solid rapport with you based on trust and understanding. We are committed to your financial success and will work closely with you to ensure your needs are met."
+      },
+      {
+        "role": "customer",
+        "text": "Im not sure if financial planning is worth the investment. Can you explain its long-term benefits?"
+      },
+      {
+        "role": "salesman",
+        "text": "Certainly! Financial planning offers a range of long-term benefits. It helps you establish clear financial goals, create a roadmap to achieve them, and make informed investment decisions. It also ensures you have a contingency plan in place for unexpected events and helps you optimize your tax strategies. Ultimately, financial planning provides you with peace of mind and confidence in your financial future. Its a wise investment in your financial well-being."
+      },
+      {
+        "role": "customer",
+        "text": "Ive been burned by risky investments before. How can you assure me that your approach is different?"
+      },
+      {
+        "role": "salesman",
+        "text": "We understand your concern and prioritize risk management. Our approach to financial planning is based on a thorough analysis of your risk tolerance and investment objectives. We focus on diversification and aligning your investments with your goals. By customizing our strategies to your needs and carefully monitoring market trends, we aim to minimize risk and maximize returns. Your financial security is our top priority."
+      }
+    ]
+  },
+  {
+    "case_id": "conv_111",
+    "domain": "health_products",
+    "n_turns": 16,
+    "source_row": 111,
+    "turns": [
+      {
+        "role": "customer",
+        "text": "Hi, Im interested in learning more about your health products."
+      },
+      {
+        "role": "salesman",
+        "text": "Hello! Im glad youre interested. How can I assist you today?"
+      },
+      {
+        "role": "customer",
+        "text": "Ive been having trouble sleeping lately. Do you have any recommendations?"
+      },
+      {
+        "role": "salesman",
+        "text": "I understand how important quality sleep is. We have a range of products that can help improve your sleep. Can you tell me more about your sleep patterns and any specific concerns you have?"
+      },
+      {
+        "role": "customer",
+        "text": "I want to improve my overall well-being. What do you suggest?"
+      },
+      {
+        "role": "salesman",
+        "text": "Thats great to hear! We have a variety of products that can support your overall well-being. Are you looking for something specific or would you like me to provide some recommendations based on your needs?"
+      },
+      {
+        "role": "customer",
+        "text": "Im a bit skeptical about trying new health products. Can you tell me more about their effectiveness?"
+      },
+      {
+        "role": "salesman",
+        "text": "I completely understand your skepticism. Our products have been rigorously tested and proven effective. We also have customer testimonials and positive reviews that highlight the benefits theyve experienced. Would you like to hear some success stories from our customers?"
+      },
+      {
+        "role": "customer",
+        "text": "What sets your health products apart from others in the market?"
+      },
+      {
+        "role": "salesman",
+        "text": "Thats a great question! Our products are crafted with high-quality ingredients and undergo rigorous quality control. They are backed by scientific research and have consistently delivered positive results. We also offer personalized customer support to ensure you get the best experience. How can I assist you further?"
+      },
+      {
+        "role": "customer",
+        "text": "Im not sure if I can afford your health products. Can you provide any information about the pricing?"
+      },
+      {
+        "role": "salesman",
+        "text": "I understand budget considerations are important. Our pricing is competitive and we offer different options to fit various budgets. We also have special promotions and discounts available. Can you let me know your specific needs so that I can provide you with the most suitable options?"
+      },
+      {
+        "role": "customer",
+        "text": "Ive heard mixed reviews about your brand. Can you address any concerns I may have?"
+      },
+      {
+        "role": "salesman",
+        "text": "I appreciate your concern. Our brand takes customer satisfaction seriously, and we continuously strive to improve our products and services. If you have any specific concerns, I would be happy to address them and provide you with more information to help you make an informed decision."
+      },
+      {
+        "role": "customer",
+        "text": "Im not sure if I can trust your brand. How can you assure me of your credibility?"
+      },
+      {
+        "role": "salesman",
+        "text": "I completely understand your hesitation. We have been in the health industry for many years and have built a strong reputation for delivering high-quality products. We have numerous certifications and satisfied customers who have benefited from our products. Additionally, we offer a money-back guarantee, so you can try our products risk-free. How can I assist you further?"
+      }
+    ]
+  }
+]

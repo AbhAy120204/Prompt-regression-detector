@@ -1,0 +1,420 @@
+{
+  "run_id": "20261010T184234Z_v1_baseline_gemini-2.5-flash",
+  "created_at": "2026-10-10T18:42:34+00:00",
+  "prompt_version": "v1_baseline",
+  "prompt_path": "C:/Users/abhay/Desktop/projects/ModelRegressionDetectionSystem/prompts/v1_baseline.yaml",
+  "model": "gemini-2.5-flash",
+  "temperature": 0.0,
+  "cases": [
+    {
+      "case_id": "conv_026",
+      "domain": "health_products",
+      "n_turns": 8,
+      "is_valid": true,
+      "violations": [],
+      "scorecard": {
+        "persuasiveness": {
+          "score": 5,
+          "reason": "The salesman makes generic claims like 'proven effective' and 'extensive research' without providing specific evidence or tailoring benefits to the customer's stated health issues, though the satisfaction guarantee is a good point."
+        },
+        "politeness": {
+          "score": 9,
+          "reason": "The salesman is consistently courteous, using empathetic phrases like 'I'm sorry to hear that' and 'I understand your skepticism,' and explicitly stating a desire to help."
+        },
+        "objection_handling": {
+          "score": 8,
+          "reason": "The salesman directly addresses the customer's skepticism by mentioning research, positive feedback, and a satisfaction guarantee, and handles cost concerns with competitive pricing and flexible options."
+        },
+        "clarity": {
+          "score": 7,
+          "reason": "The language is clear and easy to understand, but often relies on generalities such as 'overall health and well-being' and 'target specific health concerns' instead of concrete details."
+        },
+        "discovery_quality": {
+          "score": 6,
+          "reason": "The salesman asks one targeted question ('If you tell me more about your symptoms, I can recommend something suitable') but doesn't get to use the answer or pursue further diagnostic questioning to shape the pitch."
+        },
+        "pitch_rating": "average",
+        "overall_score": 7
+      },
+      "raw_text": null,
+      "usage": {
+        "latency_ms": 7747.3,
+        "input_tokens": 1104,
+        "output_tokens": 295
+      },
+      "transport_error": null,
+      "judge_alignment": null,
+      "judge_note": null
+    },
+    {
+      "case_id": "conv_024",
+      "domain": "tech_product",
+      "n_turns": 10,
+      "is_valid": true,
+      "violations": [],
+      "scorecard": {
+        "persuasiveness": {
+          "score": 5,
+          "reason": "The salesman makes many unsubstantiated claims about benefits like 'simplify daily tasks' and 'excellent value' without providing specific examples or evidence to back them up."
+        },
+        "politeness": {
+          "score": 9,
+          "reason": "The salesman consistently uses courteous language, acknowledges the customer's concerns respectfully, and maintains a warm, helpful tone throughout the conversation."
+        },
+        "objection_handling": {
+          "score": 6,
+          "reason": "The salesman acknowledges objections and offers some concrete solutions like a payment plan and satisfaction guarantee, but often answers with generalities about product quality rather than specific evidence."
+        },
+        "clarity": {
+          "score": 5,
+          "reason": "The language is easy to follow but lacks precision, relying on generic phrases like 'various features' and 'seamless user experience' without concrete details or specific examples."
+        },
+        "discovery_quality": {
+          "score": 2,
+          "reason": "The salesman asks only one generic open-ended question and does not follow up with any targeted diagnostic questions to understand the customer's specific needs or past experiences."
+        },
+        "pitch_rating": "average",
+        "overall_score": 5
+      },
+      "raw_text": null,
+      "usage": {
+        "latency_ms": 9860.2,
+        "input_tokens": 1258,
+        "output_tokens": 264
+      },
+      "transport_error": null,
+      "judge_alignment": null,
+      "judge_note": null
+    },
+    {
+      "case_id": "conv_025",
+      "domain": "tech_product",
+      "n_turns": 12,
+      "is_valid": true,
+      "violations": [],
+      "scorecard": {
+        "persuasiveness": {
+          "score": 1,
+          "reason": "The salesman makes no specific claims or builds any case for the product, only repeatedly promising to do so without delivering any information."
+        },
+        "politeness": {
+          "score": 6,
+          "reason": "The salesman maintains a polite tone and acknowledges concerns, but the repetitive, non-substantive responses diminish the genuine feeling of courtesy."
+        },
+        "objection_handling": {
+          "score": 2,
+          "reason": "The salesman acknowledges every objection but consistently defers addressing the substance, repeating a stock phrase instead of engaging with the customer's specific points."
+        },
+        "clarity": {
+          "score": 3,
+          "reason": "While individual sentences are clear, the overall communication is highly repetitive boilerplate with very low information content, failing to advance the conversation."
+        },
+        "discovery_quality": {
+          "score": 2,
+          "reason": "The salesman asks one initial generic question but then fails to follow up or ask targeted questions to uncover specific needs or past challenges, instead just promising to address them."
+        },
+        "pitch_rating": "poor",
+        "overall_score": 2
+      },
+      "raw_text": null,
+      "usage": {
+        "latency_ms": 7304.2,
+        "input_tokens": 1216,
+        "output_tokens": 248
+      },
+      "transport_error": null,
+      "judge_alignment": null,
+      "judge_note": null
+    },
+    {
+      "case_id": "conv_077",
+      "domain": "health_products",
+      "n_turns": 12,
+      "is_valid": true,
+      "violations": [],
+      "scorecard": {
+        "persuasiveness": {
+          "score": 1,
+          "reason": "The salesman makes generic claims about the product initially but then repeatedly talks about 'building rapport' and the sales process instead of making a case for the product's value or benefits."
+        },
+        "politeness": {
+          "score": 6,
+          "reason": "The salesman uses polite phrasing like 'Of course!' and 'That's a valid concern,' but his responses are so generic and self-referential to the sales process that they lack genuine warmth."
+        },
+        "objection_handling": {
+          "score": 1,
+          "reason": "Every customer objection is deflected by the salesman repeating the phrase 'building rapport' and discussing the sales process, rather than addressing the substance of the concern."
+        },
+        "clarity": {
+          "score": 3,
+          "reason": "The salesman's responses are highly repetitive, using the phrase 'building rapport' as a boilerplate answer to every question, providing no specific information relevant to the customer's queries."
+        },
+        "discovery_quality": {
+          "score": 1,
+          "reason": "The salesman asks no questions throughout the entire conversation, despite repeatedly stating that 'building rapport' helps understand customer needs."
+        },
+        "pitch_rating": "poor",
+        "overall_score": 1
+      },
+      "raw_text": null,
+      "usage": {
+        "latency_ms": 9415.5,
+        "input_tokens": 1309,
+        "output_tokens": 311
+      },
+      "transport_error": null,
+      "judge_alignment": null,
+      "judge_note": null
+    },
+    {
+      "case_id": "conv_043",
+      "domain": "health_supplements",
+      "n_turns": 14,
+      "is_valid": true,
+      "violations": [],
+      "scorecard": {
+        "persuasiveness": {
+          "score": 6,
+          "reason": "Provides relevant benefits like boosting energy and safety measures, but the claims about effectiveness and differentiation often remain unsubstantiated or vague, lacking specific evidence."
+        },
+        "politeness": {
+          "score": 9,
+          "reason": "Consistently warm, respectful, and acknowledges customer concerns with phrases like 'I understand your concern' and 'That's a valid question.'"
+        },
+        "objection_handling": {
+          "score": 8,
+          "reason": "Addresses each objection directly, providing concrete responses for safety (FDA, third-party testing) and hesitation (satisfaction guarantee)."
+        },
+        "clarity": {
+          "score": 8,
+          "reason": "The language is consistently clear, direct, and free of jargon, making the information easy to follow and understand."
+        },
+        "discovery_quality": {
+          "score": 6,
+          "reason": "Asks an initial targeted question about needs and uses the answer, but doesn't follow up with deeper diagnostic questions to fully uncover underlying issues or past experiences."
+        },
+        "pitch_rating": "good",
+        "overall_score": 7
+      },
+      "raw_text": null,
+      "usage": {
+        "latency_ms": 10450.8,
+        "input_tokens": 1346,
+        "output_tokens": 249
+      },
+      "transport_error": null,
+      "judge_alignment": null,
+      "judge_note": null
+    },
+    {
+      "case_id": "conv_027",
+      "domain": "health_insurance",
+      "n_turns": 16,
+      "is_valid": true,
+      "violations": [],
+      "scorecard": {
+        "persuasiveness": {
+          "score": 4,
+          "reason": "The salesman makes generic claims about 'best plan' and 'financial protection' but fails to build a specific case tailored to the customer's stated chronic condition or provide concrete examples of how their plans address it."
+        },
+        "politeness": {
+          "score": 9,
+          "reason": "The salesman is consistently warm, empathetic, and respectful, explicitly acknowledging and validating the customer's concerns and respecting their privacy."
+        },
+        "objection_handling": {
+          "score": 6,
+          "reason": "While the salesman acknowledges each objection, most responses are general reassurances ('building trust is a top priority,' 'measures in place') rather than specific, evidence-backed solutions or details."
+        },
+        "clarity": {
+          "score": 6,
+          "reason": "The language is understandable and free of jargon, but it is often padded with generic phrases and boilerplate reassurances, making it less precise and information-dense."
+        },
+        "discovery_quality": {
+          "score": 5,
+          "reason": "The salesman asks a good initial open-ended question but then fails to follow up on the customer's specific chronic condition or use that crucial information to tailor the subsequent pitch."
+        },
+        "pitch_rating": "average",
+        "overall_score": 6
+      },
+      "raw_text": null,
+      "usage": {
+        "latency_ms": 10281.7,
+        "input_tokens": 1442,
+        "output_tokens": 318
+      },
+      "transport_error": null,
+      "judge_alignment": null,
+      "judge_note": null
+    },
+    {
+      "case_id": "conv_034",
+      "domain": "tech_product",
+      "n_turns": 16,
+      "is_valid": true,
+      "violations": [],
+      "scorecard": {
+        "persuasiveness": {
+          "score": 6,
+          "reason": "The salesman makes claims about product quality and testing but provides no specific evidence or tailored examples to make the case compelling beyond generic assurances."
+        },
+        "politeness": {
+          "score": 9,
+          "reason": "The salesman consistently uses empathetic language, acknowledges customer concerns respectfully, and maintains a warm, helpful tone throughout the conversation."
+        },
+        "objection_handling": {
+          "score": 8,
+          "reason": "The salesman directly addresses each customer objection, offering specific policies (warranty, return, trial) or actions (testimonials, support) as solutions."
+        },
+        "clarity": {
+          "score": 8,
+          "reason": "The salesman uses precise and straightforward language, avoiding jargon or unnecessary padding, making every response easy to follow."
+        },
+        "discovery_quality": {
+          "score": 9,
+          "reason": "The salesman consistently asks targeted, open-ended questions to understand the customer's specific needs and requirements before attempting to provide detailed information or recommendations."
+        },
+        "pitch_rating": "good",
+        "overall_score": 8
+      },
+      "raw_text": null,
+      "usage": {
+        "latency_ms": 11654.8,
+        "input_tokens": 1478,
+        "output_tokens": 238
+      },
+      "transport_error": null,
+      "judge_alignment": null,
+      "judge_note": null
+    },
+    {
+      "case_id": "conv_039",
+      "domain": "tech_b2b_software",
+      "n_turns": 16,
+      "is_valid": true,
+      "violations": [],
+      "scorecard": {
+        "persuasiveness": {
+          "score": 6,
+          "reason": "The salesman offers relevant benefits like improved efficiency and productivity, but the claims remain general and unsubstantiated within the transcript, lacking specific examples or evidence."
+        },
+        "politeness": {
+          "score": 9,
+          "reason": "The salesman is consistently courteous, acknowledges customer concerns with empathy, and explicitly states he does not want to rush the customer's decision."
+        },
+        "objection_handling": {
+          "score": 8,
+          "reason": "The salesman directly addresses each objection, offering relevant responses such as explaining value for price, suggesting a demo for past bad experiences, and highlighting differentiation for competitors."
+        },
+        "clarity": {
+          "score": 8,
+          "reason": "The language used is consistently clear, precise, and professional, avoiding jargon or unnecessary padding throughout the conversation."
+        },
+        "discovery_quality": {
+          "score": 7,
+          "reason": "The salesman initiates with targeted discovery questions about the customer's needs and challenges, and continues to ask for specific details to tailor his responses, though the customer provides limited input."
+        },
+        "pitch_rating": "good",
+        "overall_score": 8
+      },
+      "raw_text": null,
+      "usage": {
+        "latency_ms": 10204.4,
+        "input_tokens": 1548,
+        "output_tokens": 255
+      },
+      "transport_error": null,
+      "judge_alignment": null,
+      "judge_note": null
+    },
+    {
+      "case_id": "conv_053",
+      "domain": "financial_planning",
+      "n_turns": 16,
+      "is_valid": true,
+      "violations": [],
+      "scorecard": {
+        "persuasiveness": {
+          "score": 4,
+          "reason": "The salesman offers general benefits like 'peace of mind' and 'maximizing potential' but provides no specific, evidence-backed reasons tailored to the customer's repeated concerns about past bad experiences."
+        },
+        "politeness": {
+          "score": 9,
+          "reason": "The salesman consistently uses warm, understanding language, acknowledges concerns, and explicitly respects the customer's need for time to think."
+        },
+        "objection_handling": {
+          "score": 5,
+          "reason": "While acknowledging each objection, the salesman's responses are often generic, repeating phrases like 'building trust' and 'transparency' without offering concrete examples or specific strategies."
+        },
+        "clarity": {
+          "score": 6,
+          "reason": "The language is clear, but many responses are padded with repetitive, generic phrases like 'building trust is of utmost importance' and 'strong track record,' which carry little specific information."
+        },
+        "discovery_quality": {
+          "score": 3,
+          "reason": "The salesman asks only one initial generic question and fails to ask any follow-up diagnostic questions to understand the specifics of the customer's past bad experiences or budget concerns."
+        },
+        "pitch_rating": "average",
+        "overall_score": 5
+      },
+      "raw_text": null,
+      "usage": {
+        "latency_ms": 11509.9,
+        "input_tokens": 1613,
+        "output_tokens": 278
+      },
+      "transport_error": null,
+      "judge_alignment": null,
+      "judge_note": null
+    },
+    {
+      "case_id": "conv_111",
+      "domain": "health_products",
+      "n_turns": 16,
+      "is_valid": true,
+      "violations": [],
+      "scorecard": {
+        "persuasiveness": {
+          "score": 4,
+          "reason": "The salesman makes many unsubstantiated claims (e.g., 'rigorously tested and proven effective,' 'backed by scientific research') without providing any specific evidence or examples to build a compelling case."
+        },
+        "politeness": {
+          "score": 8,
+          "reason": "The salesman is consistently courteous, acknowledges customer concerns with phrases like 'I understand' and 'I completely understand,' and avoids any pressure tactics."
+        },
+        "objection_handling": {
+          "score": 5,
+          "reason": "While acknowledging objections, the salesman often responds with generalities ('competitive pricing,' 'strive to improve') or pushes the onus back to the customer to specify concerns, rather than providing direct, concrete answers. The money-back guarantee is the only specific reassurance offered."
+        },
+        "clarity": {
+          "score": 5,
+          "reason": "The language is understandable but frequently padded with generic, boilerplate phrases that carry little specific information, such as 'We have a range of products that can help' or 'Our products are crafted with high-quality ingredients.'"
+        },
+        "discovery_quality": {
+          "score": 6,
+          "reason": "The salesman asks initial qualifying questions about sleep patterns and overall well-being. However, the subsequent pitch remains generic and does not visibly tailor product recommendations or information based on the customer's stated needs."
+        },
+        "pitch_rating": "average",
+        "overall_score": 6
+      },
+      "raw_text": null,
+      "usage": {
+        "latency_ms": 9799.7,
+        "input_tokens": 1380,
+        "output_tokens": 351
+      },
+      "transport_error": null,
+      "judge_alignment": null,
+      "judge_note": null
+    }
+  ],
+  "totals": {
+    "cases_total": 10,
+    "cases_valid": 10,
+    "cases_invalid": 0,
+    "cases_errored": 0,
+    "latency_p50_ms": 10032.3,
+    "latency_p95_ms": 11654.8,
+    "input_tokens": 13694,
+    "output_tokens": 2807
+  }
+}

@@ -1,0 +1,33 @@
+# Thresholds for PASS / WARN / CRITICAL decisions.
+#
+# HOW WE SET THESE
+# We ran the unchanged baseline prompt 3 times at temperature 0.
+# Temperature 0 means the model should return the same answer every time.
+# Run-to-run variance on the same prompt is the "noise floor".
+# We set WARN above that floor, and CRITICAL clearly above WARN.
+# This way the gate does not fire on noise.
+#
+# Noise floor observed (3 runs, same prompt, same model):
+#   per-dimension mean abs delta: 0.0  (temperature 0 is fully deterministic)
+#   overall_score delta:          0.0
+#   enum changes:                 0 of 10
+#
+# With a deterministic model, any non-zero delta is real signal.
+# We still leave a small buffer (1 point) before WARN, to allow for
+# minor prompt rephrasing that does not change meaning.
+
+contract:
+  # Any contract violation is CRITICAL immediately.
+  # This is a hard gate. Schema breakage is never acceptable.
+  max_violations: 0
+
+numeric:
+  # WARN when the average per-case movement on any dimension reaches 1 point.
+  warn_dimension_delta: 1.0
+  # CRITICAL when it reaches 2 points.
+  critical_dimension_delta: 2.0
+
+  # WARN when 2 or more cases change their pitch_rating enum value.
+  warn_enum_changes: 2
+  # CRITICAL when 4 or more cases change.
+  critical_enum_changes: 4
