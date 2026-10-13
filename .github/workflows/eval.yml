@@ -50,7 +50,10 @@ jobs:
           python -m mrds run "${{ steps.find_prompt.outputs.prompt_file }}" \
             --report-url "${REPORT_BASE}" \
             2>&1 | tee eval_output.txt
-          EXIT_CODE=$?
+          # PIPESTATUS[0] captures python's exit code, not tee's.
+          # Plain $? after a pipe always returns tee's code (0), so the block
+          # step would never fire.
+          EXIT_CODE=${PIPESTATUS[0]}
           echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
 
           REPORT_FILE=$(ls -t reports/*.html 2>/dev/null | head -1)
