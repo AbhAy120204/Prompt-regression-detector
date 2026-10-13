@@ -38,6 +38,7 @@ def main() -> None:
 
     elif command == "run":
         from .diff import run_diff
+        from .pr_comment import generate as generate_comment
         from .report import render
         from .runner import execute_run
         from .scoring.judge import attach_judgements
@@ -47,7 +48,18 @@ def main() -> None:
         # Parse arguments
         args = sys.argv[2:]
         promote = "--promote" in args
-        args = [a for a in args if a != "--promote"]
+        report_url_arg = None
+        filtered = []
+        for i, a in enumerate(args):
+            if a == "--promote":
+                continue
+            if a == "--report-url" and i + 1 < len(args):
+                report_url_arg = args[i + 1]
+                continue
+            if i > 0 and args[i - 1] == "--report-url":
+                continue
+            filtered.append(a)
+        args = filtered
 
         prompt_path = Path(args[0]) if args else PROJECT_ROOT / "prompts" / "v1_baseline.yaml"
 
@@ -92,6 +104,18 @@ def main() -> None:
 
         report_path = render(run, diff, baseline)
 
+        # Build the full report URL if a base URL was provided.
+        full_report_url = None
+        if report_url_arg:
+            full_report_url = f"{report_url_arg.rstrip('/')}/{report_path.name}"
+
+        # Generate markdown comment for CI.
+        comment_md = generate_comment(
+            diff, baseline, run, report_url=full_report_url
+        )
+        comment_path = PROJECT_ROOT / "pr_comment.md"
+        comment_path.write_text(comment_md, encoding="utf-8")
+
         print()
         print(f"{'─'*50}")
         print(f"Comparing: {run.prompt_version} vs {baseline.prompt_version}")
@@ -99,6 +123,7 @@ def main() -> None:
         for line in diff.details:
             print(f"           {line}")
         print(f"Report   → {report_path}")
+        print(f"Comment  → {comment_path}")
 
         # Promote this run to baseline if requested and it passed.
         if promote:
