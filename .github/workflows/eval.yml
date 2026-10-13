@@ -45,8 +45,6 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           set +e
-
-          # Build the report URL. The report will be published to gh-pages.
           REPORT_BASE="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/reports"
 
           python -m mrds run "${{ steps.find_prompt.outputs.prompt_file }}" \
@@ -55,7 +53,6 @@ jobs:
           EXIT_CODE=$?
           echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
 
-          # Find the generated report filename
           REPORT_FILE=$(ls -t reports/*.html 2>/dev/null | head -1)
           if [ -n "$REPORT_FILE" ]; then
             REPORT_NAME=$(basename "$REPORT_FILE")
@@ -65,35 +62,44 @@ jobs:
           exit 0
 
       - name: Publish report to GitHub Pages
-        if: hashFiles('reports/*.html') != ''
+        if: steps.eval.outputs.report_name != ''
         run: |
+          REPORT_NAME="${{ steps.eval.outputs.report_name }}"
+
+          # Save report to /tmp before switching branches
+          cp "reports/${REPORT_NAME}" /tmp/eval_report.html
+
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Create or update gh-pages branch with the report
-          git stash --include-untracked || true
-
-          # Check if gh-pages exists remotely
-          if git ls-remote --exit-code origin gh-pages; then
-            git fetch origin gh-pages
+          # Switch to gh-pages branch (create it if it doesn't exist)
+          if git ls-remote --exit-code origin gh-pages > /dev/null 2>&1; then
+            git fetch origin gh-pages:gh-pages
             git checkout gh-pages
           else
             git checkout --orphan gh-pages
-            git rm -rf . || true
-            echo "# Eval Reports" > index.html
+            git rm -rf . --quiet
           fi
 
-          # Copy reports
+          # Ensure reports directory exists and copy the report back
           mkdir -p reports
-          git checkout stash -- reports/ 2>/dev/null || true
-          # Also try from the working directory
-          git stash pop || true
-          cp -f reports/*.html reports/ 2>/dev/null || true
+          cp /tmp/eval_report.html "reports/${REPORT_NAME}"
 
-          git add reports/
-          git commit -m "Publish eval report for PR #${{ github.event.pull_request.number }}" || echo "No changes"
-          git push origin gh-pages --force
-          git checkout -
+          # Create or update the index page listing all reports
+          echo '<!DOCTYPE html><html><head><meta charset="UTF-8">
+          <title>Eval Reports</title>
+          <style>body{font-family:system-ui,sans-serif;max-width:800px;margin:40px auto;padding:0 20px}
+          a{color:#1a6eb5}li{margin:6px 0}</style></head><body>
+          <h1>Eval Reports</h1><ul>' > index.html
+          for f in reports/*.html; do
+            fname=$(basename "$f")
+            echo "<li><a href=\"reports/${fname}\">${fname}</a></li>" >> index.html
+          done
+          echo '</ul></body></html>' >> index.html
+
+          git add reports/ index.html
+          git commit -m "Publish eval report: ${REPORT_NAME}" || echo "No changes"
+          git push origin gh-pages
 
       - name: Post eval comment on PR
         if: always() && steps.find_prompt.outcome == 'success'
@@ -101,20 +107,12 @@ jobs:
         with:
           script: |
             const fs = require('fs');
-
-            // Try to read the generated markdown comment
             let body = '';
             try {
               body = fs.readFileSync('pr_comment.md', 'utf8');
             } catch(e) {
-              // Fallback if the eval crashed before generating the comment
-              const exitCode = '${{ steps.eval.outputs.exit_code }}';
               let output = '';
-              try {
-                output = fs.readFileSync('eval_output.txt', 'utf8');
-              } catch(e2) {
-                output = 'No output captured.';
-              }
+              try { output = fs.readFileSync('eval_output.txt', 'utf8'); } catch(e2) {}
               const lines = output.trim().split('\n').slice(-10).join('\n');
               body = [
                 '## Eval Result: ⚠️ ERROR',
@@ -127,7 +125,6 @@ jobs:
               ].join('\n');
             }
 
-            // Append the report link if we have one
             const reportUrl = '${{ steps.eval.outputs.report_url }}';
             if (reportUrl && !body.includes(reportUrl)) {
               body += '\n\n📄 [View full HTML report](' + reportUrl + ')';
@@ -141,7 +138,7 @@ jobs:
             });
 
       - name: Upload report artifact (backup)
-        if: hashFiles('reports/*.html') != ''
+        if: steps.eval.outputs.report_name != ''
         uses: actions/upload-artifact@v4
         with:
           name: eval-report
