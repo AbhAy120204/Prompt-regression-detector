@@ -14,11 +14,13 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-      contents: write      # needed to commit the new baseline on merge
+      contents: write
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0    # full history so we can diff against main
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -30,22 +32,29 @@ jobs:
           pip install -e .
           pip install "pydantic==2.13.4" "google-genai==2.9.0"
 
-      - name: Find the new prompt file
+      - name: Find the changed prompt file
         id: find_prompt
         run: |
-          # Find which prompt file was changed in this PR.
-          CHANGED=$(git diff --name-only origin/main -- prompts/ | head -1)
-          echo "prompt_file=$CHANGED" >> $GITHUB_OUTPUT
+          # Compare this branch against the base branch (main).
+          CHANGED=$(git diff --name-only origin/${{ github.event.pull_request.base.ref }} -- prompts/ | head -1)
+          if [ -z "$CHANGED" ]; then
+            echo "ERROR: No prompt file changed in this PR."
+            echo "prompt_file=" >> $GITHUB_OUTPUT
+            exit 1
+          fi
           echo "Changed prompt: $CHANGED"
+          echo "prompt_file=$CHANGED" >> $GITHUB_OUTPUT
 
       - name: Run eval against baseline
         id: eval
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        continue-on-error: true
         run: |
+          set +e
           python -m mrds run "${{ steps.find_prompt.outputs.prompt_file }}" 2>&1 | tee eval_output.txt
-          echo "exit_code=$?" >> $GITHUB_OUTPUT
+          EXIT_CODE=$?
+          echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
+          exit 0
 
       - name: Upload HTML report
         uses: actions/upload-artifact@v4
@@ -55,16 +64,22 @@ jobs:
           if-no-files-found: warn
 
       - name: Post summary on PR
+        if: always() && steps.find_prompt.outcome == 'success'
         uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs');
-            const output = fs.readFileSync('eval_output.txt', 'utf8');
+            let output = '';
+            try {
+              output = fs.readFileSync('eval_output.txt', 'utf8');
+            } catch(e) {
+              output = 'Eval failed to produce output.';
+            }
             const lines = output.trim().split('\n');
-            const summary = lines.slice(-8).join('\n');
+            const summary = lines.slice(-10).join('\n');
 
             const exitCode = '${{ steps.eval.outputs.exit_code }}';
-            const status = exitCode === '1' ? '🔴 CRITICAL' : '🟢 PASS / WARN';
+            const status = exitCode === '1' ? '🔴 CRITICAL' : (exitCode === '0' ? '🟢 PASS / WARN' : '⚠️ ERROR');
 
             const body = [
               `## Eval Result: ${status}`,
@@ -75,7 +90,9 @@ jobs:
               '',
               exitCode === '1'
                 ? '> **This PR is blocked.** Fix the regression before merging.'
-                : '> Eval passed. Download the HTML report artifact for full details.',
+                : exitCode === '0'
+                ? '> Eval passed. Download the HTML report artifact for full details.'
+                : '> Eval crashed. Check the workflow logs.',
             ].join('\n');
 
             await github.rest.issues.createComment({
@@ -103,6 +120,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: main
+          fetch-depth: 2    # need HEAD~1 for the diff
 
       - name: Set up Python
         uses: actions/setup-python@v5
