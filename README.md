@@ -62,7 +62,7 @@ The entire output must be valid JSON matching a strict Pydantic schema. If the m
 
 ### Pull Request 
 
-![Pull Request](assets\Sample_pr.png)
+![Pull Request](assets/Sample_pr.png)
 
 ### [Full HTML report](https://abhay120204.github.io/Prompt-regression-detector/reports/20261014T111136Z_v2_stricter_gemini-2.5-flash.html)
 
