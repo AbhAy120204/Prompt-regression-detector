@@ -60,7 +60,7 @@ The entire output must be valid JSON matching a strict Pydantic schema. If the m
 
 ## Demo
 
-### PR 
+### Pull Request 
 
 ![Pull Request](assets\Sample_pr.png)
 
