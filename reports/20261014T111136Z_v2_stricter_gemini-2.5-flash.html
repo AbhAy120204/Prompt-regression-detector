@@ -1,0 +1,2055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MRDS Report — v2_stricter / gemini-2.5-flash</title>
+<style>
+  /* ---- Base ---- */
+  *, *::before, *::after { box-sizing: border-box; }
+  body { font-family: system-ui, sans-serif; margin: 0; padding: 24px 32px;
+         background: #f5f5f5; color: #1a1a1a; }
+  h1, h2, h3 { margin: 0 0 8px; }
+  h2 { margin-top: 32px; border-bottom: 1px solid #ddd; padding-bottom: 4px; }
+  p { margin: 4px 0; }
+
+  /* ---- Badge ---- */
+  .badge { display: inline-block; padding: 4px 14px; border-radius: 4px;
+           font-size: 1.1rem; font-weight: 700; letter-spacing: .05em; }
+  .badge-PASS     { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+  .badge-WARN     { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+  .badge-CRITICAL { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+
+  /* ---- Cards ---- */
+  .card { background: #fff; border: 1px solid #ddd; border-radius: 6px;
+          padding: 16px 20px; margin-bottom: 16px; }
+
+  /* ---- Tables ---- */
+  table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  th { background: #f0f0f0; text-align: left; padding: 6px 10px;
+       border-bottom: 2px solid #ccc; }
+  td { padding: 6px 10px; border-bottom: 1px solid #eee; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+
+  /* ---- Delta colouring ---- */
+  .delta-neg { color: #c0392b; font-weight: 600; }
+  .delta-pos { color: #27ae60; font-weight: 600; }
+  .delta-zero { color: #888; }
+
+  /* ---- Violation colours ---- */
+  .viol-CRITICAL { color: #721c24; font-weight: 700; }
+  .viol-type { font-family: monospace; font-size: 0.85rem; background: #f5f5f5;
+               padding: 1px 5px; border-radius: 3px; }
+
+  /* ---- Side-by-side reasons ---- */
+  .reasons-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+                 margin: 4px 0 12px; }
+  .reason-box { background: #fafafa; border: 1px solid #e0e0e0; border-radius: 4px;
+                padding: 8px 10px; font-size: 0.82rem; line-height: 1.45; }
+  .reason-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+                  letter-spacing: .05em; color: #666; margin-bottom: 4px; }
+
+  /* ---- Details toggle ---- */
+  details > summary { cursor: pointer; color: #1a6eb5; font-size: 0.88rem; }
+  details[open] > summary { margin-bottom: 6px; }
+
+  /* ---- Meta grid ---- */
+  .meta-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px,1fr));
+               gap: 12px; }
+  .meta-item { background: #fff; border: 1px solid #ddd; border-radius: 6px;
+               padding: 10px 14px; }
+  .meta-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+                letter-spacing: .05em; color: #888; }
+  .meta-value { font-size: 1.05rem; font-weight: 600; margin-top: 2px; }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ────────────────────────────────────────────── -->
+<h1>Model Regression Detection Report</h1>
+<p style="color:#666; margin-bottom:20px;">
+  2026-10-14T11:11:36+00:00 &nbsp;·&nbsp; prompt: <strong>v2_stricter</strong>
+  &nbsp;·&nbsp; model: <strong>gemini-2.5-flash</strong>
+</p>
+
+<span class="badge badge-Severity.CRITICAL">Severity.CRITICAL</span>
+&nbsp;
+<span style="font-size:1rem;">CRITICAL: 0 contract violations, 8 of 10 cases regressed</span>
+
+<div style="margin-top:12px;">
+
+  <p>CRITICAL: worst mean score delta = 2.30 pts (threshold 2.0)</p>
+
+  <p>CRITICAL: 8 pitch_rating changes (threshold 4)</p>
+
+</div>
+
+
+<!-- ── META GRID ─────────────────────────────────────────── -->
+<h2>Run Metadata</h2>
+<div class="meta-grid">
+  <div class="meta-item"><div class="meta-label">Valid cases</div>
+    <div class="meta-value">10 / 10</div></div>
+  <div class="meta-item"><div class="meta-label">Latency p50</div>
+    <div class="meta-value">9660 ms</div></div>
+  <div class="meta-item"><div class="meta-label">Latency p95</div>
+    <div class="meta-value">13724 ms</div></div>
+  <div class="meta-item"><div class="meta-label">Input tokens</div>
+    <div class="meta-value">14014</div></div>
+  <div class="meta-item"><div class="meta-label">Output tokens</div>
+    <div class="meta-value">2943</div></div>
+  <div class="meta-item"><div class="meta-label">Temperature</div>
+    <div class="meta-value">0.0</div></div>
+</div>
+
+<!-- ── CONTRACT VIOLATIONS ───────────────────────────────── -->
+<h2>Contract Violations
+  <span style="font-weight:400; font-size:0.9rem; color:#888;">
+    (hard gate — any violation is CRITICAL)
+  </span>
+</h2>
+
+
+<div class="card">
+  <span style="color:#155724;">✓ No contract violations. All 10 cases returned valid JSON.</span>
+</div>
+
+
+<!-- ── SCORE COMPARISON ───────────────────────────────────── -->
+<h2>Score Comparison
+  <span style="font-weight:400; font-size:0.9rem; color:#888;">
+    (computed over 10 valid paired cases)
+  </span>
+</h2>
+
+<div class="card">
+<table>
+  <tr>
+    <th>Dimension</th>
+    <th class="num">Baseline mean</th>
+    <th class="num">Current mean</th>
+    <th class="num">Delta</th>
+    <th class="num">Mean abs delta</th>
+    <th class="num">Exact match</th>
+    <th class="num">Moved ≥2</th>
+  </tr>
+  
+  <tr>
+    <td>persuasiveness</td>
+    <td class="num">4.2</td>
+    <td class="num">3.0</td>
+    <td class="num
+       delta-neg
+      ">
+      -1.2
+    </td>
+    <td class="num">1.2</td>
+    <td class="num">3 / 10</td>
+    <td class="num">5</td>
+  </tr>
+  
+  <tr>
+    <td>politeness</td>
+    <td class="num">8.3</td>
+    <td class="num">6.7</td>
+    <td class="num
+       delta-neg
+      ">
+      -1.6
+    </td>
+    <td class="num">1.6</td>
+    <td class="num">1 / 10</td>
+    <td class="num">7</td>
+  </tr>
+  
+  <tr>
+    <td>objection_handling</td>
+    <td class="num">5.7</td>
+    <td class="num">4.1</td>
+    <td class="num
+       delta-neg
+      ">
+      -1.6
+    </td>
+    <td class="num">1.6</td>
+    <td class="num">2 / 10</td>
+    <td class="num">5</td>
+  </tr>
+  
+  <tr>
+    <td>clarity</td>
+    <td class="num">5.9</td>
+    <td class="num">3.6</td>
+    <td class="num
+       delta-neg
+      ">
+      -2.3
+    </td>
+    <td class="num">2.3</td>
+    <td class="num">0 / 10</td>
+    <td class="num">7</td>
+  </tr>
+  
+  <tr>
+    <td>discovery_quality</td>
+    <td class="num">4.7</td>
+    <td class="num">4.1</td>
+    <td class="num
+       delta-neg
+      ">
+      -0.6
+    </td>
+    <td class="num">0.8</td>
+    <td class="num">4 / 10</td>
+    <td class="num">1</td>
+  </tr>
+  
+  <tr>
+    <td>overall_score</td>
+    <td class="num">5.5</td>
+    <td class="num">3.7</td>
+    <td class="num
+       delta-neg
+      ">
+      -1.8
+    </td>
+    <td class="num">1.8</td>
+    <td class="num">2 / 10</td>
+    <td class="num">6</td>
+  </tr>
+  
+</table>
+</div>
+
+
+<div class="card">
+  <strong>pitch_rating changes (8):</strong>
+  <table style="margin-top:8px;">
+    <tr><th>Case</th><th>Baseline</th><th>Current</th></tr>
+    
+    <tr>
+      <td>conv_024</td>
+      <td>average</td>
+      <td class="delta-neg">
+        bad
+      </td>
+    </tr>
+    
+    <tr>
+      <td>conv_026</td>
+      <td>average</td>
+      <td class="delta-neg">
+        bad
+      </td>
+    </tr>
+    
+    <tr>
+      <td>conv_027</td>
+      <td>average</td>
+      <td class="delta-neg">
+        bad
+      </td>
+    </tr>
+    
+    <tr>
+      <td>conv_034</td>
+      <td>good</td>
+      <td class="delta-neg">
+        bad
+      </td>
+    </tr>
+    
+    <tr>
+      <td>conv_039</td>
+      <td>good</td>
+      <td class="delta-neg">
+        bad
+      </td>
+    </tr>
+    
+    <tr>
+      <td>conv_043</td>
+      <td>good</td>
+      <td class="">
+        average
+      </td>
+    </tr>
+    
+    <tr>
+      <td>conv_053</td>
+      <td>average</td>
+      <td class="delta-neg">
+        bad
+      </td>
+    </tr>
+    
+    <tr>
+      <td>conv_111</td>
+      <td>average</td>
+      <td class="delta-neg">
+        bad
+      </td>
+    </tr>
+    
+  </table>
+</div>
+
+
+<!-- ── PER-CASE DETAIL ────────────────────────────────────── -->
+<h2>Per-case Detail</h2>
+
+
+
+
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h3>conv_026
+      <span style="font-weight:400; font-size:0.85rem; color:#666;">
+        (health_products, 8 turns)
+      </span>
+    </h3>
+    <span class="badge
+      badge-CRITICAL
+      "
+      style="font-size:0.8rem;">
+      regressed
+    </span>
+  </div>
+
+  <!-- Score table -->
+  <table style="margin-top:8px; width:auto;">
+    <tr>
+      <th>Dimension</th>
+      <th class="num">Baseline</th>
+      <th class="num">Current</th>
+      <th class="num">Δ</th>
+    </tr>
+    
+    
+    <tr>
+      <td>persuasiveness</td>
+      <td class="num">5</td>
+      <td class="num">3</td>
+      <td class="num delta-neg">
+        -2
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>politeness</td>
+      <td class="num">9</td>
+      <td class="num">7</td>
+      <td class="num delta-neg">
+        -2
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>objection_handling</td>
+      <td class="num">8</td>
+      <td class="num">5</td>
+      <td class="num delta-neg">
+        -3
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>clarity</td>
+      <td class="num">7</td>
+      <td class="num">3</td>
+      <td class="num delta-neg">
+        -4
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>discovery_quality</td>
+      <td class="num">6</td>
+      <td class="num">5</td>
+      <td class="num delta-neg">
+        -1
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>overall_score</td>
+      <td class="num">7</td>
+      <td class="num">4</td>
+      <td class="num delta-neg">
+        -3
+      </td>
+    </tr>
+    
+    <tr>
+      <td>pitch_rating</td>
+      <td>average</td>
+      <td class="delta-neg">bad</td>
+      <td class="delta-neg">
+        changed
+      </td>
+    </tr>
+  </table>
+
+  <!-- Reason panels -->
+  
+  <details style="margin-top:10px;">
+    <summary>Show reasoning (side by side)</summary>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">persuasiveness</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman makes generic claims like &#39;proven effective&#39; and &#39;extensive research&#39; without providing specific evidence or tailoring benefits to the customer&#39;s stated health issues, though the satisfaction guarantee is a good point.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman makes generic claims like &#39;proven to be effective&#39; and &#39;backed by extensive research&#39; without providing any specific evidence or tailoring benefits to the customer&#39;s situation.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">politeness</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman is consistently courteous, using empathetic phrases like &#39;I&#39;m sorry to hear that&#39; and &#39;I understand your skepticism,&#39; and explicitly stating a desire to help.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman consistently uses polite phrases such as &#39;I&#39;m sorry to hear that&#39; and &#39;I understand your skepticism,&#39; showing consistent courtesy and acknowledging the customer&#39;s feelings.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">objection_handling</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman directly addresses the customer&#39;s skepticism by mentioning research, positive feedback, and a satisfaction guarantee, and handles cost concerns with competitive pricing and flexible options.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        While acknowledging objections, the salesman offers generic reassurance (&#39;backed by extensive research&#39;) for trust, but provides concrete solutions for risk (satisfaction guarantee) and affordability (payment options).
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">clarity</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The language is clear and easy to understand, but often relies on generalities such as &#39;overall health and well-being&#39; and &#39;target specific health concerns&#39; instead of concrete details.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The language is consistently vague, using boilerplate phrases like &#39;overall health and well-being,&#39; &#39;natural ingredients,&#39; and &#39;competitive compared to similar products&#39; without concrete details.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">discovery_quality</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman asks one targeted question (&#39;If you tell me more about your symptoms, I can recommend something suitable&#39;) but doesn&#39;t get to use the answer or pursue further diagnostic questioning to shape the pitch.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman asks one targeted question (&#39;If you tell me more about your symptoms...&#39;) but the customer does not provide details, and the salesman does not re-engage on discovery or use any information to shape the pitch.
+      </div>
+    </div>
+    
+  </details>
+  
+
+  <!-- Advisory judge -->
+  
+  <p style="margin-top:8px; font-size:0.82rem; color:#555;">
+    <strong>Reasoning alignment (advisory):</strong>
+    4/5 — The reasoning is very similar across all points, with identical conclusions and only minor differences in emphasis or specific examples for one category.
+  </p>
+  
+</div>
+
+
+
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h3>conv_034
+      <span style="font-weight:400; font-size:0.85rem; color:#666;">
+        (tech_product, 16 turns)
+      </span>
+    </h3>
+    <span class="badge
+      badge-CRITICAL
+      "
+      style="font-size:0.8rem;">
+      regressed
+    </span>
+  </div>
+
+  <!-- Score table -->
+  <table style="margin-top:8px; width:auto;">
+    <tr>
+      <th>Dimension</th>
+      <th class="num">Baseline</th>
+      <th class="num">Current</th>
+      <th class="num">Δ</th>
+    </tr>
+    
+    
+    <tr>
+      <td>persuasiveness</td>
+      <td class="num">6</td>
+      <td class="num">4</td>
+      <td class="num delta-neg">
+        -2
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>politeness</td>
+      <td class="num">9</td>
+      <td class="num">7</td>
+      <td class="num delta-neg">
+        -2
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>objection_handling</td>
+      <td class="num">8</td>
+      <td class="num">5</td>
+      <td class="num delta-neg">
+        -3
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>clarity</td>
+      <td class="num">8</td>
+      <td class="num">5</td>
+      <td class="num delta-neg">
+        -3
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>discovery_quality</td>
+      <td class="num">9</td>
+      <td class="num">6</td>
+      <td class="num delta-neg">
+        -3
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>overall_score</td>
+      <td class="num">8</td>
+      <td class="num">4</td>
+      <td class="num delta-neg">
+        -4
+      </td>
+    </tr>
+    
+    <tr>
+      <td>pitch_rating</td>
+      <td>good</td>
+      <td class="delta-neg">bad</td>
+      <td class="delta-neg">
+        changed
+      </td>
+    </tr>
+  </table>
+
+  <!-- Reason panels -->
+  
+  <details style="margin-top:10px;">
+    <summary>Show reasoning (side by side)</summary>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">persuasiveness</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman makes claims about product quality and testing but provides no specific evidence or tailored examples to make the case compelling beyond generic assurances.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman makes generic claims about &#39;high-quality materials&#39; and &#39;rigorous testing&#39; without providing any specific features, benefits, or evidence tailored to the customer&#39;s potential needs.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">politeness</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman consistently uses empathetic language, acknowledges customer concerns respectfully, and maintains a warm, helpful tone throughout the conversation.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman consistently uses warm, respectful language and acknowledges customer concerns with phrases like &#39;I understand that choosing... can be overwhelming&#39; and &#39;I&#39;m sorry to hear about your previous experience.&#39;
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">objection_handling</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman directly addresses each customer objection, offering specific policies (warranty, return, trial) or actions (testimonials, support) as solutions.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        Some objections are addressed with relevant details like a warranty, return policy, or trial period. However, others are met with generic assurances (&#39;extensive quality control measures&#39;) or by deflecting back to discovery without providing substance.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">clarity</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman uses precise and straightforward language, avoiding jargon or unnecessary padding, making every response easy to follow.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The language is understandable but padded with boilerplate phrases (&#39;Of course! I&#39;d be happy to provide you with all the information you need&#39;) and vague promises (&#39;undergone enhancements,&#39; &#39;addresses common issues&#39;) instead of concrete product details.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">discovery_quality</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman consistently asks targeted, open-ended questions to understand the customer&#39;s specific needs and requirements before attempting to provide detailed information or recommendations.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman consistently asks targeted questions to uncover needs (&#39;what specific features you&#39;re looking for?&#39;), and states the intent to use the answers, but the transcript does not show these answers being used to shape the pitch.
+      </div>
+    </div>
+    
+  </details>
+  
+
+  <!-- Advisory judge -->
+  
+  <p style="margin-top:8px; font-size:0.82rem; color:#555;">
+    <strong>Reasoning alignment (advisory):</strong>
+    2/5 — The reasoning for &#39;Clarity,&#39; &#39;Objection Handling,&#39; and &#39;Discovery Quality&#39; is substantially different, with the second set often contradicting or adding critical caveats to the first set&#39;s assessment.
+  </p>
+  
+</div>
+
+
+
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h3>conv_027
+      <span style="font-weight:400; font-size:0.85rem; color:#666;">
+        (health_insurance, 16 turns)
+      </span>
+    </h3>
+    <span class="badge
+      badge-CRITICAL
+      "
+      style="font-size:0.8rem;">
+      regressed
+    </span>
+  </div>
+
+  <!-- Score table -->
+  <table style="margin-top:8px; width:auto;">
+    <tr>
+      <th>Dimension</th>
+      <th class="num">Baseline</th>
+      <th class="num">Current</th>
+      <th class="num">Δ</th>
+    </tr>
+    
+    
+    <tr>
+      <td>persuasiveness</td>
+      <td class="num">4</td>
+      <td class="num">3</td>
+      <td class="num delta-neg">
+        -1
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>politeness</td>
+      <td class="num">9</td>
+      <td class="num">7</td>
+      <td class="num delta-neg">
+        -2
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>objection_handling</td>
+      <td class="num">6</td>
+      <td class="num">4</td>
+      <td class="num delta-neg">
+        -2
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>clarity</td>
+      <td class="num">6</td>
+      <td class="num">3</td>
+      <td class="num delta-neg">
+        -3
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>discovery_quality</td>
+      <td class="num">5</td>
+      <td class="num">5</td>
+      <td class="num delta-zero">
+        0
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>overall_score</td>
+      <td class="num">6</td>
+      <td class="num">4</td>
+      <td class="num delta-neg">
+        -2
+      </td>
+    </tr>
+    
+    <tr>
+      <td>pitch_rating</td>
+      <td>average</td>
+      <td class="delta-neg">bad</td>
+      <td class="delta-neg">
+        changed
+      </td>
+    </tr>
+  </table>
+
+  <!-- Reason panels -->
+  
+  <details style="margin-top:10px;">
+    <summary>Show reasoning (side by side)</summary>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">persuasiveness</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman makes generic claims about &#39;best plan&#39; and &#39;financial protection&#39; but fails to build a specific case tailored to the customer&#39;s stated chronic condition or provide concrete examples of how their plans address it.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman offers only generic claims about financial protection and customer relationships, failing to build a specific case for the product tailored to the customer&#39;s chronic condition or affordability needs.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">politeness</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman is consistently warm, empathetic, and respectful, explicitly acknowledging and validating the customer&#39;s concerns and respecting their privacy.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman consistently uses courteous language, acknowledges the customer&#39;s concerns, and maintains a warm, respectful tone throughout the conversation.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">objection_handling</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        While the salesman acknowledges each objection, most responses are general reassurances (&#39;building trust is a top priority,&#39; &#39;measures in place&#39;) rather than specific, evidence-backed solutions or details.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        Most objections are met with generic reassurance or vague promises of future action, with little to no concrete detail or verifiable responses to address the customer&#39;s specific doubts.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">clarity</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The language is understandable and free of jargon, but it is often padded with generic phrases and boilerplate reassurances, making it less precise and information-dense.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The conversation is heavily padded with boilerplate phrases like &#39;rest assured,&#39; &#39;prioritize customer satisfaction,&#39; and &#39;building strong relationships,&#39; which convey little specific information.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">discovery_quality</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman asks a good initial open-ended question but then fails to follow up on the customer&#39;s specific chronic condition or use that crucial information to tailor the subsequent pitch.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman asks a good initial open-ended question to uncover needs but then fails to visibly use the customer&#39;s answers (chronic condition, affordability) to shape the subsequent pitch or provide tailored information.
+      </div>
+    </div>
+    
+  </details>
+  
+
+  <!-- Advisory judge -->
+  
+  <p style="margin-top:8px; font-size:0.82rem; color:#555;">
+    <strong>Reasoning alignment (advisory):</strong>
+    5/5 — The reasoning in the second set aligns almost perfectly with the first, using different wording but conveying the same core observations and conclusions for each point.
+  </p>
+  
+</div>
+
+
+
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h3>conv_039
+      <span style="font-weight:400; font-size:0.85rem; color:#666;">
+        (tech_b2b_software, 16 turns)
+      </span>
+    </h3>
+    <span class="badge
+      badge-CRITICAL
+      "
+      style="font-size:0.8rem;">
+      regressed
+    </span>
+  </div>
+
+  <!-- Score table -->
+  <table style="margin-top:8px; width:auto;">
+    <tr>
+      <th>Dimension</th>
+      <th class="num">Baseline</th>
+      <th class="num">Current</th>
+      <th class="num">Δ</th>
+    </tr>
+    
+    
+    <tr>
+      <td>persuasiveness</td>
+      <td class="num">6</td>
+      <td class="num">4</td>
+      <td class="num delta-neg">
+        -2
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>politeness</td>
+      <td class="num">9</td>
+      <td class="num">7</td>
+      <td class="num delta-neg">
+        -2
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>objection_handling</td>
+      <td class="num">8</td>
+      <td class="num">5</td>
+      <td class="num delta-neg">
+        -3
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>clarity</td>
+      <td class="num">8</td>
+      <td class="num">5</td>
+      <td class="num delta-neg">
+        -3
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>discovery_quality</td>
+      <td class="num">7</td>
+      <td class="num">7</td>
+      <td class="num delta-zero">
+        0
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>overall_score</td>
+      <td class="num">8</td>
+      <td class="num">5</td>
+      <td class="num delta-neg">
+        -3
+      </td>
+    </tr>
+    
+    <tr>
+      <td>pitch_rating</td>
+      <td>good</td>
+      <td class="delta-neg">bad</td>
+      <td class="delta-neg">
+        changed
+      </td>
+    </tr>
+  </table>
+
+  <!-- Reason panels -->
+  
+  <details style="margin-top:10px;">
+    <summary>Show reasoning (side by side)</summary>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">persuasiveness</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman offers relevant benefits like improved efficiency and productivity, but the claims remain general and unsubstantiated within the transcript, lacking specific examples or evidence.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman makes generic claims about value, efficiency, and uniqueness without providing specific examples, evidence, or tailoring them to the customer&#39;s stated situation.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">politeness</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman is consistently courteous, acknowledges customer concerns with empathy, and explicitly states he does not want to rush the customer&#39;s decision.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman consistently uses warm, respectful language and acknowledges customer concerns with phrases like &#39;I completely understand your concern&#39; and &#39;Im sorry to hear about your previous experience.&#39;
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">objection_handling</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman directly addresses each objection, offering relevant responses such as explaining value for price, suggesting a demo for past bad experiences, and highlighting differentiation for competitors.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman acknowledges objections but provides mostly generic reassurance (&#39;unique,&#39; &#39;proven track record&#39;) or defers to a demo/trial without addressing the substance of the concerns with concrete details or evidence.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">clarity</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The language used is consistently clear, precise, and professional, avoiding jargon or unnecessary padding throughout the conversation.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        While understandable, the language is padded with vague promises and boilerplate phrases such as &#39;advanced features and capabilities,&#39; &#39;significantly improve your efficiency,&#39; and &#39;exceeding customer expectations.&#39;
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">discovery_quality</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman initiates with targeted discovery questions about the customer&#39;s needs and challenges, and continues to ask for specific details to tailor his responses, though the customer provides limited input.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman asks targeted, open-ended questions (&#39;what specifically caught your attention,&#39; &#39;specific challenges youre facing&#39;) and explicitly states the intent to use the answers to tailor the solution.
+      </div>
+    </div>
+    
+  </details>
+  
+
+  <!-- Advisory judge -->
+  
+  <p style="margin-top:8px; font-size:0.82rem; color:#555;">
+    <strong>Reasoning alignment (advisory):</strong>
+    3/5 — The reasoning aligns well on persuasiveness, politeness, and discovery, but diverges significantly with contradictory interpretations for objection handling and clarity.
+  </p>
+  
+</div>
+
+
+
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h3>conv_043
+      <span style="font-weight:400; font-size:0.85rem; color:#666;">
+        (health_supplements, 14 turns)
+      </span>
+    </h3>
+    <span class="badge
+      badge-CRITICAL
+      "
+      style="font-size:0.8rem;">
+      regressed
+    </span>
+  </div>
+
+  <!-- Score table -->
+  <table style="margin-top:8px; width:auto;">
+    <tr>
+      <th>Dimension</th>
+      <th class="num">Baseline</th>
+      <th class="num">Current</th>
+      <th class="num">Δ</th>
+    </tr>
+    
+    
+    <tr>
+      <td>persuasiveness</td>
+      <td class="num">6</td>
+      <td class="num">4</td>
+      <td class="num delta-neg">
+        -2
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>politeness</td>
+      <td class="num">9</td>
+      <td class="num">7</td>
+      <td class="num delta-neg">
+        -2
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>objection_handling</td>
+      <td class="num">8</td>
+      <td class="num">6</td>
+      <td class="num delta-neg">
+        -2
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>clarity</td>
+      <td class="num">8</td>
+      <td class="num">5</td>
+      <td class="num delta-neg">
+        -3
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>discovery_quality</td>
+      <td class="num">6</td>
+      <td class="num">5</td>
+      <td class="num delta-neg">
+        -1
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>overall_score</td>
+      <td class="num">7</td>
+      <td class="num">5</td>
+      <td class="num delta-neg">
+        -2
+      </td>
+    </tr>
+    
+    <tr>
+      <td>pitch_rating</td>
+      <td>good</td>
+      <td class="delta-neg">average</td>
+      <td class="delta-neg">
+        changed
+      </td>
+    </tr>
+  </table>
+
+  <!-- Reason panels -->
+  
+  <details style="margin-top:10px;">
+    <summary>Show reasoning (side by side)</summary>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">persuasiveness</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        Provides relevant benefits like boosting energy and safety measures, but the claims about effectiveness and differentiation often remain unsubstantiated or vague, lacking specific evidence.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman makes generic claims about &#39;natural ingredients,&#39; &#39;rigorous testing,&#39; and &#39;scientific research&#39; without providing any specific product names, ingredient details, or evidence to back them up.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">politeness</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        Consistently warm, respectful, and acknowledges customer concerns with phrases like &#39;I understand your concern&#39; and &#39;That&#39;s a valid question.&#39;
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman consistently uses polite language, acknowledges customer concerns with phrases like &#39;I understand your concern&#39; and &#39;That&#39;s a valid question,&#39; and avoids pressure tactics.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">objection_handling</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        Addresses each objection directly, providing concrete responses for safety (FDA, third-party testing) and hesitation (satisfaction guarantee).
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman provides concrete answers for safety (&#39;FDA-approved facilities,&#39; &#39;third-party tested&#39;) and guarantees (&#39;30 days for a full refund&#39;), but offers only generic reassurance for &#39;what makes us different&#39; and &#39;why choose us&#39;.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">clarity</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The language is consistently clear, direct, and free of jargon, making the information easy to follow and understand.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The language is a mix of clear, concrete statements (e.g., &#39;FDA-approved facilities,&#39; &#39;30 days for a full refund&#39;) and vague, padded phrases like &#39;overall well-being,&#39; &#39;holistic approach,&#39; and &#39;building relationships&#39;.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">discovery_quality</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        Asks an initial targeted question about needs and uses the answer, but doesn&#39;t follow up with deeper diagnostic questions to fully uncover underlying issues or past experiences.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman asks one initial open-ended question (&#39;What specific needs or goals do you have?&#39;) but does not follow up to deeply understand the customer&#39;s specific situation or past experiences beyond acknowledging &#39;low energy levels&#39;.
+      </div>
+    </div>
+    
+  </details>
+  
+
+  <!-- Advisory judge -->
+  
+  <p style="margin-top:8px; font-size:0.82rem; color:#555;">
+    <strong>Reasoning alignment (advisory):</strong>
+    3/5 — While most points align closely, the reasoning for &#39;clarity&#39; is substantially different, with the first set stating consistent clarity and the second noting a mix of clear and vague language.
+  </p>
+  
+</div>
+
+
+
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h3>conv_024
+      <span style="font-weight:400; font-size:0.85rem; color:#666;">
+        (tech_product, 10 turns)
+      </span>
+    </h3>
+    <span class="badge
+      badge-CRITICAL
+      "
+      style="font-size:0.8rem;">
+      regressed
+    </span>
+  </div>
+
+  <!-- Score table -->
+  <table style="margin-top:8px; width:auto;">
+    <tr>
+      <th>Dimension</th>
+      <th class="num">Baseline</th>
+      <th class="num">Current</th>
+      <th class="num">Δ</th>
+    </tr>
+    
+    
+    <tr>
+      <td>persuasiveness</td>
+      <td class="num">5</td>
+      <td class="num">3</td>
+      <td class="num delta-neg">
+        -2
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>politeness</td>
+      <td class="num">9</td>
+      <td class="num">7</td>
+      <td class="num delta-neg">
+        -2
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>objection_handling</td>
+      <td class="num">6</td>
+      <td class="num">5</td>
+      <td class="num delta-neg">
+        -1
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>clarity</td>
+      <td class="num">5</td>
+      <td class="num">3</td>
+      <td class="num delta-neg">
+        -2
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>discovery_quality</td>
+      <td class="num">2</td>
+      <td class="num">2</td>
+      <td class="num delta-zero">
+        0
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>overall_score</td>
+      <td class="num">5</td>
+      <td class="num">4</td>
+      <td class="num delta-neg">
+        -1
+      </td>
+    </tr>
+    
+    <tr>
+      <td>pitch_rating</td>
+      <td>average</td>
+      <td class="delta-neg">bad</td>
+      <td class="delta-neg">
+        changed
+      </td>
+    </tr>
+  </table>
+
+  <!-- Reason panels -->
+  
+  <details style="margin-top:10px;">
+    <summary>Show reasoning (side by side)</summary>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">persuasiveness</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman makes many unsubstantiated claims about benefits like &#39;simplify daily tasks&#39; and &#39;excellent value&#39; without providing specific examples or evidence to back them up.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman makes generic claims like &#39;simplify daily tasks and improve productivity&#39; and &#39;excellent value&#39; without providing specific benefits or evidence tailored to the customer&#39;s situation.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">politeness</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman consistently uses courteous language, acknowledges the customer&#39;s concerns respectfully, and maintains a warm, helpful tone throughout the conversation.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman consistently uses polite language, acknowledges customer concerns with phrases like &#39;I understand your concern,&#39; and avoids any pressure tactics.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">objection_handling</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman acknowledges objections and offers some concrete solutions like a payment plan and satisfaction guarantee, but often answers with generalities about product quality rather than specific evidence.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman acknowledges objections and offers some relevant details like a &#39;flexible payment plan&#39; and &#39;satisfaction guarantee,&#39; but often relies on generic reassurance for the product&#39;s core value proposition.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">clarity</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The language is easy to follow but lacks precision, relying on generic phrases like &#39;various features&#39; and &#39;seamless user experience&#39; without concrete details or specific examples.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The language is filled with vague promises and boilerplate phrases such as &#39;user-friendly interface,&#39; &#39;streamlines processes,&#39; and &#39;exceptional customer satisfaction,&#39; lacking concrete details.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">discovery_quality</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman asks only one generic open-ended question and does not follow up with any targeted diagnostic questions to understand the customer&#39;s specific needs or past experiences.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman asks only one generic question (&#39;How can I assist you further?&#39;) and proposes to discuss needs later, but fails to ask any targeted questions to uncover the customer&#39;s specific requirements within the conversation.
+      </div>
+    </div>
+    
+  </details>
+  
+
+  <!-- Advisory judge -->
+  
+  <p style="margin-top:8px; font-size:0.82rem; color:#555;">
+    <strong>Reasoning alignment (advisory):</strong>
+    5/5 — The second set&#39;s reasoning aligns almost perfectly with the first, identifying the same strengths, weaknesses, and even specific examples across all evaluation points.
+  </p>
+  
+</div>
+
+
+
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h3>conv_053
+      <span style="font-weight:400; font-size:0.85rem; color:#666;">
+        (financial_planning, 16 turns)
+      </span>
+    </h3>
+    <span class="badge
+      badge-WARN"
+      style="font-size:0.8rem;">
+      unchanged
+    </span>
+  </div>
+
+  <!-- Score table -->
+  <table style="margin-top:8px; width:auto;">
+    <tr>
+      <th>Dimension</th>
+      <th class="num">Baseline</th>
+      <th class="num">Current</th>
+      <th class="num">Δ</th>
+    </tr>
+    
+    
+    <tr>
+      <td>persuasiveness</td>
+      <td class="num">4</td>
+      <td class="num">4</td>
+      <td class="num delta-zero">
+        0
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>politeness</td>
+      <td class="num">9</td>
+      <td class="num">7</td>
+      <td class="num delta-neg">
+        -2
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>objection_handling</td>
+      <td class="num">5</td>
+      <td class="num">5</td>
+      <td class="num delta-zero">
+        0
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>clarity</td>
+      <td class="num">6</td>
+      <td class="num">5</td>
+      <td class="num delta-neg">
+        -1
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>discovery_quality</td>
+      <td class="num">3</td>
+      <td class="num">4</td>
+      <td class="num delta-pos">
+        +1
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>overall_score</td>
+      <td class="num">5</td>
+      <td class="num">5</td>
+      <td class="num delta-zero">
+        0
+      </td>
+    </tr>
+    
+    <tr>
+      <td>pitch_rating</td>
+      <td>average</td>
+      <td class="delta-neg">bad</td>
+      <td class="delta-neg">
+        changed
+      </td>
+    </tr>
+  </table>
+
+  <!-- Reason panels -->
+  
+  <details style="margin-top:10px;">
+    <summary>Show reasoning (side by side)</summary>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">persuasiveness</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman offers general benefits like &#39;peace of mind&#39; and &#39;maximizing potential&#39; but provides no specific, evidence-backed reasons tailored to the customer&#39;s repeated concerns about past bad experiences.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman makes generic claims like &#39;proven track record&#39; and &#39;maximize your financial potential&#39; without providing any specific evidence or unique value propositions tailored to the customer.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">politeness</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman consistently uses warm, understanding language, acknowledges concerns, and explicitly respects the customer&#39;s need for time to think.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman is consistently courteous, using phrases like &#39;I&#39;d be happy to!&#39; and &#39;We respect your decision-making process,&#39; and avoids any pressure tactics.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">objection_handling</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        While acknowledging each objection, the salesman&#39;s responses are often generic, repeating phrases like &#39;building trust&#39; and &#39;transparency&#39; without offering concrete examples or specific strategies.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman acknowledges each objection and offers relevant, but unsubstantiated, assurances. He repeats similar generic claims for similar concerns without providing concrete, verifiable responses.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">clarity</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The language is clear, but many responses are padded with repetitive, generic phrases like &#39;building trust is of utmost importance&#39; and &#39;strong track record,&#39; which carry little specific information.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The language is understandable but heavily padded with boilerplate phrases like &#39;building trust is a top priority&#39; and &#39;establish a solid rapport,&#39; which lack specific, new information.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">discovery_quality</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman asks only one initial generic question and fails to ask any follow-up diagnostic questions to understand the specifics of the customer&#39;s past bad experiences or budget concerns.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman asks only one broad initial question and does not follow up on the customer&#39;s specific concerns (e.g., &#39;bad experiences,&#39; &#39;budget&#39;) with targeted questions to uncover deeper needs.
+      </div>
+    </div>
+    
+  </details>
+  
+
+  <!-- Advisory judge -->
+  
+  <p style="margin-top:8px; font-size:0.82rem; color:#555;">
+    <strong>Reasoning alignment (advisory):</strong>
+    5/5 — The second set&#39;s reasoning aligns almost perfectly with the first, capturing the same substance and emphasis for each point, despite minor wording differences.
+  </p>
+  
+</div>
+
+
+
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h3>conv_077
+      <span style="font-weight:400; font-size:0.85rem; color:#666;">
+        (health_products, 12 turns)
+      </span>
+    </h3>
+    <span class="badge
+      badge-WARN"
+      style="font-size:0.8rem;">
+      unchanged
+    </span>
+  </div>
+
+  <!-- Score table -->
+  <table style="margin-top:8px; width:auto;">
+    <tr>
+      <th>Dimension</th>
+      <th class="num">Baseline</th>
+      <th class="num">Current</th>
+      <th class="num">Δ</th>
+    </tr>
+    
+    
+    <tr>
+      <td>persuasiveness</td>
+      <td class="num">1</td>
+      <td class="num">1</td>
+      <td class="num delta-zero">
+        0
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>politeness</td>
+      <td class="num">6</td>
+      <td class="num">5</td>
+      <td class="num delta-neg">
+        -1
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>objection_handling</td>
+      <td class="num">1</td>
+      <td class="num">1</td>
+      <td class="num delta-zero">
+        0
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>clarity</td>
+      <td class="num">3</td>
+      <td class="num">1</td>
+      <td class="num delta-neg">
+        -2
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>discovery_quality</td>
+      <td class="num">1</td>
+      <td class="num">1</td>
+      <td class="num delta-zero">
+        0
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>overall_score</td>
+      <td class="num">1</td>
+      <td class="num">1</td>
+      <td class="num delta-zero">
+        0
+      </td>
+    </tr>
+    
+    <tr>
+      <td>pitch_rating</td>
+      <td>poor</td>
+      <td class="">poor</td>
+      <td class="">
+        —
+      </td>
+    </tr>
+  </table>
+
+  <!-- Reason panels -->
+  
+  <details style="margin-top:10px;">
+    <summary>Show reasoning (side by side)</summary>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">persuasiveness</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman makes generic claims about the product initially but then repeatedly talks about &#39;building rapport&#39; and the sales process instead of making a case for the product&#39;s value or benefits.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman repeatedly deflects from the product&#39;s value, focusing instead on the abstract concept of &#39;building rapport&#39; without any concrete benefits or evidence.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">politeness</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman uses polite phrasing like &#39;Of course!&#39; and &#39;That&#39;s a valid concern,&#39; but his responses are so generic and self-referential to the sales process that they lack genuine warmth.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman uses polite opening phrases like &#39;Of course!&#39; and &#39;That&#39;s a valid concern&#39; but then immediately pivots to formulaic responses about &#39;building rapport&#39; rather than engaging genuinely.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">objection_handling</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        Every customer objection is deflected by the salesman repeating the phrase &#39;building rapport&#39; and discussing the sales process, rather than addressing the substance of the concern.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman consistently deflects every objection by repeating the phrase &#39;building rapport&#39; instead of providing any direct, verifiable, or substantive response to the customer&#39;s concerns.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">clarity</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman&#39;s responses are highly repetitive, using the phrase &#39;building rapport&#39; as a boilerplate answer to every question, providing no specific information relevant to the customer&#39;s queries.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman&#39;s language is filled with repetitive boilerplate (&#39;building rapport&#39;) and vague promises, failing to provide concrete information or address customer questions directly.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">discovery_quality</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman asks no questions throughout the entire conversation, despite repeatedly stating that &#39;building rapport&#39; helps understand customer needs.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman asks no questions to uncover the customer&#39;s needs, despite repeatedly stating that &#39;building rapport&#39; helps understand specific needs and pain points.
+      </div>
+    </div>
+    
+  </details>
+  
+
+  <!-- Advisory judge -->
+  
+  <p style="margin-top:8px; font-size:0.82rem; color:#555;">
+    <strong>Reasoning alignment (advisory):</strong>
+    5/5 — The second set&#39;s reasoning aligns almost perfectly with the first, echoing the same specific criticisms and examples across all categories with only minor rephrasing.
+  </p>
+  
+</div>
+
+
+
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h3>conv_111
+      <span style="font-weight:400; font-size:0.85rem; color:#666;">
+        (health_products, 16 turns)
+      </span>
+    </h3>
+    <span class="badge
+      badge-CRITICAL
+      "
+      style="font-size:0.8rem;">
+      regressed
+    </span>
+  </div>
+
+  <!-- Score table -->
+  <table style="margin-top:8px; width:auto;">
+    <tr>
+      <th>Dimension</th>
+      <th class="num">Baseline</th>
+      <th class="num">Current</th>
+      <th class="num">Δ</th>
+    </tr>
+    
+    
+    <tr>
+      <td>persuasiveness</td>
+      <td class="num">4</td>
+      <td class="num">3</td>
+      <td class="num delta-neg">
+        -1
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>politeness</td>
+      <td class="num">8</td>
+      <td class="num">7</td>
+      <td class="num delta-neg">
+        -1
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>objection_handling</td>
+      <td class="num">5</td>
+      <td class="num">4</td>
+      <td class="num delta-neg">
+        -1
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>clarity</td>
+      <td class="num">5</td>
+      <td class="num">4</td>
+      <td class="num delta-neg">
+        -1
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>discovery_quality</td>
+      <td class="num">6</td>
+      <td class="num">5</td>
+      <td class="num delta-neg">
+        -1
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>overall_score</td>
+      <td class="num">6</td>
+      <td class="num">4</td>
+      <td class="num delta-neg">
+        -2
+      </td>
+    </tr>
+    
+    <tr>
+      <td>pitch_rating</td>
+      <td>average</td>
+      <td class="delta-neg">bad</td>
+      <td class="delta-neg">
+        changed
+      </td>
+    </tr>
+  </table>
+
+  <!-- Reason panels -->
+  
+  <details style="margin-top:10px;">
+    <summary>Show reasoning (side by side)</summary>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">persuasiveness</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman makes many unsubstantiated claims (e.g., &#39;rigorously tested and proven effective,&#39; &#39;backed by scientific research&#39;) without providing any specific evidence or examples to build a compelling case.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman relies on generic claims like &#39;rigorously tested&#39; and &#39;backed by scientific research&#39; without providing any specific evidence, examples, or tailoring to the customer&#39;s stated needs.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">politeness</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman is consistently courteous, acknowledges customer concerns with phrases like &#39;I understand&#39; and &#39;I completely understand,&#39; and avoids any pressure tactics.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman consistently uses warm, acknowledging phrases such as &#39;I understand your skepticism&#39; and &#39;I appreciate your concern,&#39; maintaining a respectful and non-pushy tone.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">objection_handling</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        While acknowledging objections, the salesman often responds with generalities (&#39;competitive pricing,&#39; &#39;strive to improve&#39;) or pushes the onus back to the customer to specify concerns, rather than providing direct, concrete answers. The money-back guarantee is the only specific reassurance offered.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman acknowledges objections but responds with generic reassurances (&#39;rigorously tested,&#39; &#39;competitive pricing,&#39; &#39;strive to improve&#39;) rather than direct, verifiable information or specific examples.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">clarity</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The language is understandable but frequently padded with generic, boilerplate phrases that carry little specific information, such as &#39;We have a range of products that can help&#39; or &#39;Our products are crafted with high-quality ingredients.&#39;
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The language is understandable but heavily padded with vague promises and boilerplate phrases like &#39;range of products,&#39; &#39;variety of options,&#39; and &#39;strong reputation&#39; without concrete details.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">discovery_quality</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman asks initial qualifying questions about sleep patterns and overall well-being. However, the subsequent pitch remains generic and does not visibly tailor product recommendations or information based on the customer&#39;s stated needs.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman asks qualifying questions like &#39;Can you tell me more about your sleep patterns?&#39; and &#39;Can you let me know your specific needs?&#39; but doesn&#39;t effectively use the (often unprovided) answers to shape the pitch or offer tailored solutions.
+      </div>
+    </div>
+    
+  </details>
+  
+
+  <!-- Advisory judge -->
+  
+  <p style="margin-top:8px; font-size:0.82rem; color:#555;">
+    <strong>Reasoning alignment (advisory):</strong>
+    5/5 — The reasoning in the second set aligns almost perfectly with the first, sharing the same core observations, criticisms, and often similar examples across all categories.
+  </p>
+  
+</div>
+
+
+
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h3>conv_025
+      <span style="font-weight:400; font-size:0.85rem; color:#666;">
+        (tech_product, 12 turns)
+      </span>
+    </h3>
+    <span class="badge
+      badge-CRITICAL
+      "
+      style="font-size:0.8rem;">
+      regressed
+    </span>
+  </div>
+
+  <!-- Score table -->
+  <table style="margin-top:8px; width:auto;">
+    <tr>
+      <th>Dimension</th>
+      <th class="num">Baseline</th>
+      <th class="num">Current</th>
+      <th class="num">Δ</th>
+    </tr>
+    
+    
+    <tr>
+      <td>persuasiveness</td>
+      <td class="num">1</td>
+      <td class="num">1</td>
+      <td class="num delta-zero">
+        0
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>politeness</td>
+      <td class="num">6</td>
+      <td class="num">6</td>
+      <td class="num delta-zero">
+        0
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>objection_handling</td>
+      <td class="num">2</td>
+      <td class="num">1</td>
+      <td class="num delta-neg">
+        -1
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>clarity</td>
+      <td class="num">3</td>
+      <td class="num">2</td>
+      <td class="num delta-neg">
+        -1
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>discovery_quality</td>
+      <td class="num">2</td>
+      <td class="num">1</td>
+      <td class="num delta-neg">
+        -1
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>overall_score</td>
+      <td class="num">2</td>
+      <td class="num">1</td>
+      <td class="num delta-neg">
+        -1
+      </td>
+    </tr>
+    
+    <tr>
+      <td>pitch_rating</td>
+      <td>poor</td>
+      <td class="">poor</td>
+      <td class="">
+        —
+      </td>
+    </tr>
+  </table>
+
+  <!-- Reason panels -->
+  
+  <details style="margin-top:10px;">
+    <summary>Show reasoning (side by side)</summary>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">persuasiveness</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman makes no specific claims or builds any case for the product, only repeatedly promising to do so without delivering any information.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman repeatedly promises to explain or address concerns but never provides any specific product information or benefits to build a compelling case.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">politeness</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman maintains a polite tone and acknowledges concerns, but the repetitive, non-substantive responses diminish the genuine feeling of courtesy.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman is consistently courteous and acknowledges concerns, but the repeated phrase &#39;Building rapport is important to me&#39; feels formulaic rather than genuinely personalized.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">objection_handling</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman acknowledges every objection but consistently defers addressing the substance, repeating a stock phrase instead of engaging with the customer&#39;s specific points.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman acknowledges objections but consistently defers addressing them, instead repeating generic phrases like &#39;building rapport is important to me&#39; without substance.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">clarity</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        While individual sentences are clear, the overall communication is highly repetitive boilerplate with very low information content, failing to advance the conversation.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman&#39;s responses are almost entirely composed of repetitive boilerplate phrases like &#39;building rapport&#39; and vague promises to discuss later, lacking concrete information.
+      </div>
+    </div>
+    
+    <p style="margin:10px 0 2px; font-size:0.82rem; font-weight:600; color:#444;">discovery_quality</p>
+    <div class="reasons-row">
+      <div class="reason-box">
+        <div class="reason-label">Baseline</div>
+        The salesman asks one initial generic question but then fails to follow up or ask targeted questions to uncover specific needs or past challenges, instead just promising to address them.
+      </div>
+      <div class="reason-box">
+        <div class="reason-label">Current</div>
+        The salesman asks only one generic question initially and then fails to ask any further diagnostic questions to uncover specific customer needs or challenges.
+      </div>
+    </div>
+    
+  </details>
+  
+
+  <!-- Advisory judge -->
+  
+  <p style="margin-top:8px; font-size:0.82rem; color:#555;">
+    <strong>Reasoning alignment (advisory):</strong>
+    5/5 — The second set&#39;s reasoning aligns almost perfectly with the first, consistently identifying the same core issues and drawing identical conclusions, often just adding specific examples.
+  </p>
+  
+</div>
+
+
+<!-- Cases that had contract violations (excluded from above) -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
